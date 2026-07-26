@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امیربهادر امیری | Android Developer</title>
+    <meta name="description" content="توسعه‌دهنده اندروید با تجربه در Kotlin، Java و معماری‌های مدرن">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+        
+        :root {
+            --primary: #00b4d8;
+            --dark: #121212;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark), #1a1a2e);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            background: linear-gradient(rgba(18,18,18,0.85), rgba(18,18,18,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,180,216,0.3);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .about {
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .skills {
+            background: #f8f9fa;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .projects {
+            background: white;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .contact {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">امیربهادر</div>
+                <ul class="nav-links">
+                    <li><a href="#about">درباره من</a></li>
+                    <li><a href="#skills">مهارت‌ها</a></li>
+                    <li><a href="#projects">پروژه‌ها</a></li>
+                    <li><a href="#contact">تماس</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>امیربهادر امیری</h1>
+            <p class="subtitle">توسعه‌دهنده اندروید | متخصص Kotlin و Java</p>
+            <p style="max-width: 600px; margin: 0 auto 2rem; font-size: 1.2rem;">
+                ایجاد اپلیکیشن‌های کاربردی، کتابخانه‌های UI و راه‌حل‌های هوشمند برای کسب‌وکارها
+            </p>
+            <a href="#contact" class="btn">ارتباط با من</a>
+            <a href="https://github.com/AmirBahadorAmiri" target="_blank" class="btn" style="background: transparent; border: 2px solid white; margin-right: 15px;">گیت‌هاب</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">درباره من</h2>
+            <div class="about-content">
+                <div>
+                    <img src="https://avatars.githubusercontent.com/u/110715468?v=4" alt="امیربهادر امیری" class="profile-img">
+                </div>
+                <div>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                        توسعه‌دهنده اندروید با تجربه در ساخت اپلیکیشن‌های کاربردی و کتابخانه‌های UI. 
+                        علاقه‌مند به معماری‌های تمیز (MVVM، MVP) و ارائه راه‌حل‌های کاربرپسند.
+                    </p>
+                    <p style="margin-bottom: 1.5rem;">
+                        ساکن ایران • <a href="mailto:bahadoramiri.report@gmail.com" style="color: var(--primary);">bahadoramiri.report@gmail.com</a>
+                    </p>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div>
+                            <strong>تجربه:</strong><br>
+                            توسعه اپلیکیشن‌های تجاری و کتابخانه‌های اوپن‌سورس
+                        </div>
+                        <div>
+                            <strong>تمرکز فعلی:</strong><br>
+                            Kotlin • MVVM • Room • Retrofit
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">مهارت‌ها و فناوری‌ها</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>زبان‌های برنامه‌نویسی</h3>
+                    <ul style="margin-top: 1rem; line-height: 2;">
+                        <li>Kotlin (پیشرفته)</li>
+                        <li>Java (پیشرفته)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>معماری و ابزارها</h3>
+                    <ul style="margin-top: 1rem; line-height: 2;">
+                        <li>MVVM Architecture</li>
+                        <li>MVP Architecture</li>
+                        <li>Room Database</li>
+                        <li>Retrofit + Gson</li>
+                        <li>Navigation Component</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>کتابخانه‌ها و UI</h3>
+                    <ul style="margin-top: 1rem; line-height: 2;">
+                        <li>Material Design 3</li>
+                        <li>Data Binding</li>
+                        <li>Telegram-style Dialogs</li>
+                        <li>PrimeCalendar (تقویم شمسی)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">پروژه‌های منتخب</h2>
+            <div class="projects-grid">
+                <!-- KalaYar -->
+                <div class="project-card">
+                    <img src="img/image_1.png" alt="کالایار">
+                    <div class="project-info">
+                        <h3>کالایار (KalaYar)</h3>
+                        <p style="margin: 10px 0;">اپلیکیشن جامع انبارداری و حسابداری فروشگاه‌ها با قابلیت تولید فاکتور PDF، گزارش‌گیری پیشرفته و قیمت‌های زنده ارز و طلا.</p>
+                        <p><strong>تکنولوژی‌ها:</strong> Kotlin, MVVM, Room, Retrofit</p>
+                        <a href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" class="btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 1rem;">مشاهده در گیت‌هاب</a>
+                    </div>
+                </div>
+                
+                <!-- TelegramDialog -->
+                <div class="project-card">
+                    <img src="img/picsum.photos_180.jpg" alt="TelegramDialog">
+                    <div class="project-info">
+                        <h3>TelegramDialog</h3>
+                        <p style="margin: 10px 0;">کتابخانه UI اندروید برای ایجاد دیالوگ‌های سبک تلگرام با قابلیت کامل سفارشی‌سازی، پشتیبانی از RTL و Dark Mode.</p>
+                        <p><strong>تکنولوژی‌ها:</strong> Java + Kotlin, JitPack</p>
+                        <a href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" class="btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 1rem;">مشاهده در گیت‌هاب</a>
+                    </div>
+                </div>
+                
+                <!-- AppleNote -->
+                <div class="project-card">
+                    <img src="img/image_2.png" alt="AppleNote">
+                    <div class="project-info">
+                        <h3>AppleNote</h3>
+                        <p style="margin: 10px 0;">اپلیکیشن یادداشت‌برداری با رابط کاربری شبیه Notes اپل، پیاده‌سازی بهترین شیوه‌های MVP Architecture.</p>
+                        <p><strong>تکنولوژی‌ها:</strong> Java, MVP</p>
+                        <a href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" class="btn" style="padding: 8px 20px; font-size: 0.9rem; margin-top: 1rem;">مشاهده در گیت‌هاب</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">ارتباط با من</h2>
+            <div class="contact-form">
+                <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem;">
+                    برای همکاری یا پروژه جدید، از طریق ایمیل یا تلگرام با من در ارتباط باشید.
+                </p>
+                <div style="text-align: center; font-size: 1.3rem;">
+                    <p><strong>ایمیل:</strong> <a href="mailto:bahadoramiri.report@gmail.com" style="color: var(--primary);">bahadoramiri.report@gmail.com</a></p>
+                    <p><strong>تلگرام:</strong> <a href="https://t.me/AmirBahadorAmiri" target="_blank" style="color: var(--primary);">@AmirBahadorAmiri</a></p>
+                    <p><strong>گیت‌هاب:</strong> <a href="https://github.com/AmirBahadorAmiri" target="_blank" style="color: var(--primary);">github.com/AmirBahadorAmiri</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 امیربهادر امیری • تمام حقوق محفوظ است</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                ساخته شده با ❤️ برای نمایش رزومه
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Simple mobile menu (can be expanded)
+        console.log('%cسایت شخصی امیربهادر امیری آماده است!', 'color: #00b4d8; font-size: 14px;');
+    </script>
+</body>
+</html>
