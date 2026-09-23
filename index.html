@@ -247,16 +247,33 @@
 
   /* ---------- ABOUT ---------- */
   .about p{ max-width:68ch; color:var(--text); font-size:16px; }
-  .stack-row{
-    display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;
+  .skills-list{
+    list-style:none; margin:20px 0 0; padding:0;
+    display:flex; flex-direction:column; gap:10px;
   }
-  .stack-row span{
+  .skills-list li{
+    display:flex; flex-direction:column; gap:8px; align-items:flex-start;
+    margin:0; padding:0;
+  }
+  .skills-list .chips{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin:0; padding:0;
+  }
+  .skills-list li span{
     font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
     padding:6px 12px;
     border:1px solid var(--border);
     border-radius:6px;
     color:var(--muted);
+  }
+  .skills-list .grp{
+    border:none;
+    padding:6px 0;
+    min-width:130px;
+    color:var(--accent);
+    font-weight:700;
+    font-size:13px;
   }
 
   /* ---------- PROJECTS: file tree ---------- */
@@ -297,6 +314,8 @@
   .frow .lang .sw{ width:8px; height:8px; border-radius:50%; }
   .lang-kotlin .sw{ background:#7F52FF; }
   .lang-java .sw{ background:#B07219; }
+  .lang-php .sw{ background:#777BB4; }
+  .lang-js .sw{ background:#F7DF1E; }
   .frow .stars{
     font-family:'JetBrains Mono', monospace;
     font-size:12px;
@@ -353,7 +372,7 @@
     <div>
       <p class="kicker">توسعه‌دهنده اندروید</p>
       <h1>اپلیکیشن می‌سازم؛ تمیز، پایدار و قابل نگهداری.</h1>
-      <p class="bio">با Kotlin و Java روی اندروید کار می‌کنم؛ از معماری‌های MVP گرفته تا کتابخانه‌های UI و ابزارهای کاربردی برای کسب‌وکارهای کوچک. کد را برای خواندن می‌نویسم، نه فقط برای اجرا شدن.</p>
+      <p class="bio">توسعه‌دهنده اندرویدم؛ با Kotlin و Java اپ می‌سازم و بک‌اند و ابزارهای وب را با PHP می‌نویسم. از اپ‌های حسابداری فروشگاه‌ها تا کتابخانه‌های متن‌باز UI. کد را برای خواندن می‌نویسم، نه فقط برای اجرا شدن.</p>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">مشاهده گیت‌هاب</a>
         <a class="btn ghost" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">گفتگو در تلگرام</a>
@@ -368,16 +387,16 @@
       <pre class="mono"><code
 ><span class="type-line l1" style="--w:100%"><span class="tok-cm">// 📱 Android Developer</span></span>
 <span class="type-line l2" style="--w:100%"><span class="tok-kw">class</span> <span class="tok-fn">AmirBahadorAmiri</span> : Developer() {</span>
-<span class="type-line l3" style="--w:100%">    <span class="tok-kw">val</span> stack = listOf(<span class="tok-str">"Kotlin"</span>, <span class="tok-str">"Java"</span>, <span class="tok-str">"MVP"</span>)</span>
-<span class="type-line l4" style="--w:100%">    <span class="tok-kw">val</span> repos = 38</span>
+<span class="type-line l3" style="--w:100%">    <span class="tok-kw">val</span> stack = listOf(<span class="tok-str">"Kotlin"</span>, <span class="tok-str">"Java"</span>, <span class="tok-str">"PHP"</span>, <span class="tok-str">"JavaScript"</span>)</span>
+<span class="type-line l4" style="--w:100%">    <span class="tok-kw">val</span> repos = 48</span>
 <span class="type-line l5" style="--w:100%">    <span class="tok-kw">fun</span> <span class="tok-fn">build</span>() = <span class="tok-str">"چیزهای خوب و پایدار"</span></span>
 <span class="type-line l6" style="--w:100%">}<span class="cursor"></span></span></code></pre>
     </div>
   </section>
 
   <div class="stats">
-    <div class="stat"><div class="num">38</div><div class="lbl">مخزن عمومی</div></div>
-    <div class="stat"><div class="num">120</div><div class="lbl">ستاره</div></div>
+    <div class="stat"><div class="num">48</div><div class="lbl">مخزن عمومی</div></div>
+    <div class="stat"><div class="num">118</div><div class="lbl">ستاره</div></div>
     <div class="stat"><div class="num">126</div><div class="lbl">دنبال‌کننده</div></div>
     <div class="stat"><div class="num">80</div><div class="lbl">دنبال‌شونده</div></div>
   </div>
@@ -387,16 +406,39 @@
       <h2>درباره من</h2>
       <p>خلاصه‌ای از حوزه کاری و ابزارهایی که باهاشون کار می‌کنم.</p>
     </div>
-    <p>روی توسعه اندروید تمرکز دارم؛ از اپ‌های حسابداری برای فروشگاه‌های کوچک تا کتابخانه‌های متن‌باز برای رابط کاربری. علاقه‌مندم به معماری تمیز، کد قابل تست و یادگیری مداوم ابزارهای جدید اکوسیستم اندروید.</p>
-    <div class="stack-row">
-      <span>Kotlin</span><span>Java</span><span>Android SDK</span><span>MVP</span><span>Git</span>
-    </div>
+    <p>تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML ،CSS و JavaScript آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.</p>
+    <ul class="skills-list">
+      <li>
+        <span class="grp">سیستم‌عامل</span>
+        <div class="chips"><span>Windows</span><span>Linux</span></div>
+      </li>
+      <li>
+        <span class="grp">زبان‌ها</span>
+        <div class="chips"><span>Kotlin</span><span>Java</span><span>Android</span><span>PHP</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+      </li>
+      <li>
+        <span class="grp">ابزار کدنویسی</span>
+        <div class="chips"><span>Android Studio</span><span>PhpStorm</span><span>VS Code</span></div>
+      </li>
+      <li>
+        <span class="grp">گیت</span>
+        <div class="chips"><span>Git</span><span>GitHub</span><span>GitHub Desktop</span><span>GitKraken</span><span>SmartGit</span><span>GitForce</span><span>Sourcetree</span><span>TortoiseGit</span><span>Fork</span><span>Tower</span></div>
+      </li>
+      <li>
+        <span class="grp">تست API</span>
+        <div class="chips"><span>Postman</span><span>Bruno</span><span>Yaak</span><span>HTTPie</span></div>
+      </li>
+      <li>
+        <span class="grp">دیزاین</span>
+        <div class="chips"><span>Adobe XD</span></div>
+      </li>
+    </ul>
   </section>
 
   <section id="projects">
     <div class="sec-head">
       <h2>پروژه‌های منتخب</h2>
-      <p>چهار مخزنی که در پروفایل گیت‌هابم پین شده‌اند.</p>
+      <p>شش مخزنی که در پروفایل گیت‌هابم پین شده‌اند.</p>
     </div>
 
     <div class="filetree">
@@ -420,6 +462,36 @@
         <span class="desc">کتابخانه‌ای برای ساخت دیالوگ‌های سبک تلگرام در اندروید با تنظیمات انعطاف‌پذیر</span>
       </a>
 
+      <a class="frow" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="name">LogStream</span>
+        <span class="lang lang-php"><span class="sw"></span>PHP</span>
+        <span class="stars">★ 2</span>
+        <span class="desc">ابزار مدیریت و مشاهده لاگ‌ها</span>
+      </a>
+
+      <a class="frow" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="name">GPTelegramBot</span>
+        <span class="lang lang-js"><span class="sw"></span>JavaScript</span>
+        <span class="stars">★ 2</span>
+        <span class="desc">ربات تلگرام مبتنی بر GPT</span>
+      </a>
+
+      <a class="frow" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="name">DEFINEit</span>
+        <span class="lang lang-java"><span class="sw"></span>Java</span>
+        <span class="stars">★ 2</span>
+        <span class="desc">برنامه فرهنگ لغت و تعریف واژه‌ها</span>
+      </a>
+
       <a class="frow" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
         <span class="icon">
           <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -428,16 +500,6 @@
         <span class="lang lang-java"><span class="sw"></span>Java</span>
         <span class="stars">★ 4</span>
         <span class="desc">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP</span>
-      </a>
-
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/AndroidLearning" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">AndroidLearning</span>
-        <span class="lang lang-java"><span class="sw"></span>Java</span>
-        <span class="stars">★ 4</span>
-        <span class="desc">آزمایش کتابخانه‌ها و قابلیت‌های مختلف اندروید</span>
       </a>
     </div>
   </section>
@@ -449,6 +511,7 @@
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">گیت‌هاب</a>
         <a class="btn ghost" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">تلگرام</a>
+        <a class="btn ghost" href="mailto:bahadoramiri.report@gmail.com">ایمیل</a>
         <a class="btn ghost" href="https://AmirBahadorAmiri.github.io" target="_blank" rel="noopener">وب‌سایت</a>
       </div>
     </div>
@@ -456,6 +519,8 @@
 
   <footer>
     <span class="mono">© 2026 — Amir Bahador Amiri</span>
+    <br>
+    <span>Made with ❤️ by Amir</span>
   </footer>
 
 </div>
