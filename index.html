@@ -3,370 +3,740 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
 <title>امیر بهادر امیری — توسعه‌دهنده اندروید</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* تم را قبل از رندر تنظیم کن تا فلش اولیه نداشته باشیم */
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+      document.documentElement.classList.add('js');
+    } catch (e) {}
+  })();
+</script>
 <style>
-  :root{
-    --bg:#F5F6F8;
-    --surface:#FFFFFF;
-    --surface-2:#ECEEF3;
-    --text:#14161B;
-    --muted:#5B6272;
-    --accent:#6633CC;
-    --accent-2:#C75A12;
-    --border:#DBDFE6;
-    --shadow: 0 1px 0 rgba(20,22,27,0.04);
+  /* ============================================================
+     THEME TOKENS
+     ============================================================ */
+  :root {
+    --base:        #EEF1F8;
+    --base-2:      #E4E9F5;
+    --text:        #13161D;
+    --text-2:      #454D61;
+    --muted:       #4E566A;
+    --accent:      #6D3BE0;
+    --accent-2:    #C2570F;
+    --accent-soft: rgba(109, 59, 224, 0.14);
+
+    /* glass */
+    --glass:        rgba(255, 255, 255, 0.55);
+    --glass-2:      rgba(255, 255, 255, 0.38);
+    --glass-brd:    rgba(255, 255, 255, 0.80);
+    --glass-hi:     rgba(255, 255, 255, 0.95);
+    --glass-shadow: 0 8px 32px rgba(28, 38, 66, 0.10);
+    --chip:         rgba(255, 255, 255, 0.62);
+    --chip-brd:     rgba(255, 255, 255, 0.85);
+    --hair:         rgba(19, 22, 29, 0.10);
+    --grain-op:     0.05;
+    --blob-op:      0.72;
+    --blob-1:       #C4B5FD;
+    --blob-2:       #FDBA74;
+    --blob-3:       #67E8F9;
+    --blob-4:       #F9A8D4;
+    --blob-5:       #6EE7B7;
+    --ring:         rgba(109, 59, 224, 0.55);
+    --shadow-card:  0 18px 40px -24px rgba(28, 38, 66, 0.55);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0E1014;
-      --surface:#161922;
-      --surface-2:#1D212C;
-      --text:#EDEFF3;
-      --muted:#8B93A7;
-      --accent:#9D7BFF;
-      --accent-2:#FF8B3D;
-      --border:#292E39;
-      --shadow: 0 1px 0 rgba(0,0,0,0.3);
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --base:        #0F1118;
+      --base-2:      #06070C;
+      --text:        #EFEFF2;
+      --text-2:      #C9CBD1;
+      --muted:       #A7A9B0;
+      --accent:      #A98BFF;
+      --accent-2:    #FF9A55;
+      --accent-soft: rgba(169, 139, 255, 0.16);
+
+      --glass:        rgba(255, 255, 255, 0.065);
+      --glass-2:      rgba(255, 255, 255, 0.040);
+      --glass-brd:    rgba(255, 255, 255, 0.145);
+      --glass-hi:     rgba(255, 255, 255, 0.13);
+      --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.34);
+      --chip:         rgba(255, 255, 255, 0.070);
+      --chip-brd:     rgba(255, 255, 255, 0.150);
+      --hair:         rgba(255, 255, 255, 0.115);
+      --grain-op:     0.038;
+      --blob-op:      0.78;
+      --blob-1:       #8E6E9C;
+      --blob-2:       #F2803C;
+      --blob-3:       #5A9E82;
+      --blob-4:       #E8709B;
+      --blob-5:       #D2B455;
+      --ring:         rgba(169, 139, 255, 0.60);
+      --shadow-card:  0 20px 46px -26px rgba(0, 0, 0, 0.85);
     }
   }
-  :root[data-theme="dark"]{
-    --bg:#0E1014;
-    --surface:#161922;
-    --surface-2:#1D212C;
-    --text:#EDEFF3;
-    --muted:#8B93A7;
-    --accent:#9D7BFF;
-    --accent-2:#FF8B3D;
-    --border:#292E39;
-    --shadow: 0 1px 0 rgba(0,0,0,0.3);
+
+  :root[data-theme="dark"] {
+    --base:        #0F1118;
+    --base-2:      #06070C;
+    --text:        #EFEFF2;
+    --text-2:      #C9CBD1;
+    --muted:       #A7A9B0;
+    --accent:      #A98BFF;
+    --accent-2:    #FF9A55;
+    --accent-soft: rgba(169, 139, 255, 0.16);
+
+    --glass:        rgba(255, 255, 255, 0.065);
+    --glass-2:      rgba(255, 255, 255, 0.040);
+    --glass-brd:    rgba(255, 255, 255, 0.145);
+    --glass-hi:     rgba(255, 255, 255, 0.13);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.34);
+    --chip:         rgba(255, 255, 255, 0.070);
+    --chip-brd:     rgba(255, 255, 255, 0.150);
+    --hair:         rgba(255, 255, 255, 0.115);
+    --grain-op:     0.038;
+    --blob-op:      0.78;
+    --blob-1:       #8E6E9C;
+    --blob-2:       #F2803C;
+    --blob-3:       #5A9E82;
+    --blob-4:       #E8709B;
+    --blob-5:       #D2B455;
+    --ring:         rgba(169, 139, 255, 0.60);
+    --shadow-card:  0 20px 46px -26px rgba(0, 0, 0, 0.85);
   }
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Vazirmatn', Tahoma, sans-serif;
-    line-height:1.75;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:var(--accent); color:#fff; }
+  /* ============================================================
+     BASE
+     ============================================================ */
+  * { box-sizing: border-box; }
 
-  a{ color:inherit; }
-  .mono{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; direction:ltr; unicode-bidi:isolate; }
+  html {
+    /* بزرگ‌نمایی کل صفحه — یک عدد، متن و فاصله‌ها و کارت‌ها را با هم بزرگ می‌کند.
+       برای کم‌وزوم‌کردن کافی است فقط همین عدد را عوض کنی. */
+    --zoom: 1.07;
+    zoom: var(--zoom);
 
-  .wrap{
-    max-width:840px;
-    margin:0 auto;
-    padding:0 24px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    -webkit-text-size-adjust: 100%;
   }
 
-  /* ---------- NAV ---------- */
-  header.site{
-    position:sticky; top:0; z-index:20;
-    backdrop-filter: blur(10px);
-    background:color-mix(in srgb, var(--bg) 82%, transparent);
-    border-bottom:1px solid var(--border);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 24px;
-    max-width:840px; margin:0 auto;
-  }
-  .nav .brand{
-    font-weight:800; font-size:16px; letter-spacing:0.2px;
-  }
-  .nav .brand .mono{ color:var(--accent); font-weight:600; font-size:14px; }
-  .nav .links{ display:flex; gap:20px; }
-  .nav .links a{
-    text-decoration:none; font-size:14px; color:var(--muted);
-    border-bottom:1px solid transparent;
-    transition:color .15s ease, border-color .15s ease;
-    padding-bottom:2px;
-  }
-  .nav .links a:hover{ color:var(--text); border-color:var(--accent); }
+  /* اسکرول نرم با JS فعال می‌شود؛ رفتار بومی نباید با آن بجنگد */
+  html.smooth-scroll { scroll-behavior: auto; }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    padding:76px 0 56px;
-    display:grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap:48px;
-    align-items:center;
-  }
-  .hero .kicker{
-    color:var(--accent-2);
-    font-size:14px;
-    font-weight:600;
-    margin:0 0 14px;
-  }
-  .hero h1{
-    font-size:clamp(30px, 4.4vw, 44px);
-    line-height:1.28;
-    font-weight:900;
-    margin:0 0 20px;
-    letter-spacing:-0.3px;
-  }
-  .hero p.bio{
-    color:var(--muted);
-    font-size:17px;
-    max-width:52ch;
-    margin:0 0 28px;
-  }
-  .hero .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:11px 20px;
-    border-radius:8px;
-    font-size:14.5px;
-    font-weight:600;
-    text-decoration:none;
-    border:1px solid var(--border);
-    transition:transform .15s ease, border-color .15s ease, background .15s ease;
-  }
-  .btn:hover{ transform:translateY(-1px); }
-  .btn.primary{
-    background:var(--text);
-    color:var(--bg);
-    border-color:var(--text);
-  }
-  .btn.ghost{
-    background:transparent;
-    color:var(--text);
-  }
-  .btn.ghost:hover{ border-color:var(--accent); }
-
-  /* ---------- TERMINAL ---------- */
-  .terminal{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:10px;
-    overflow:hidden;
-    box-shadow: 0 12px 30px -18px rgba(0,0,0,0.35);
-  }
-  .terminal .bar{
-    display:flex; align-items:center; gap:8px;
-    padding:11px 14px;
-    border-bottom:1px solid var(--border);
-    background:var(--surface-2);
-  }
-  .terminal .dot{ width:10px; height:10px; border-radius:50%; }
-  .terminal .dot:nth-child(1){ background:#FF5F57; }
-  .terminal .dot:nth-child(2){ background:#FEBC2E; }
-  .terminal .dot:nth-child(3){ background:#28C840; }
-  .terminal .filename{
-    margin-inline-start:auto;
-    font-size:12px; color:var(--muted);
-  }
-  .terminal pre{
-    margin:0;
-    padding:20px 18px;
-    font-size:13.5px;
-    line-height:1.8;
-    overflow-x:auto;
-    direction:ltr;
-    text-align:left;
-  }
-  .terminal code{ white-space:pre; }
-  .tok-kw{ color:var(--accent); }
-  .tok-str{ color:var(--accent-2); }
-  .tok-cm{ color:var(--muted); }
-  .tok-fn{ color:var(--text); font-weight:600; }
-
-  .type-line{
-    display:block;
-    overflow:hidden;
-    white-space:nowrap;
-    width:0;
-    animation: reveal linear forwards;
-    animation-duration: 0.9s;
-  }
-  .type-line.l1{ animation-delay: 0.1s; }
-  .type-line.l2{ animation-delay: 1.0s; }
-  .type-line.l3{ animation-delay: 1.7s; }
-  .type-line.l4{ animation-delay: 2.4s; }
-  .type-line.l5{ animation-delay: 2.9s; }
-  .type-line.l6{ animation-delay: 3.6s; }
-  @keyframes reveal{ to{ width: var(--w, 100%); } }
-  .cursor{
-    display:inline-block; width:7px; height:15px;
-    background:var(--accent); margin-inline-start:2px;
-    animation: blink 1s step-end infinite;
-    vertical-align:-2px;
-  }
-  @keyframes blink{ 50%{ opacity:0; } }
-
-  @media (prefers-reduced-motion: reduce){
-    .type-line{ animation:none; width:100% !important; }
-    .cursor{ animation:none; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+    isolation: isolate;
   }
 
-  /* ---------- STATS ---------- */
-  .stats{
-    display:flex;
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    padding:22px 0;
-    gap:0;
-  }
-  .stats .stat{
-    flex:1;
-    text-align:center;
-    border-inline-start:1px solid var(--border);
-  }
-  .stats .stat:first-child{ border-inline-start:none; }
-  .stats .stat .num{
-    font-family:'JetBrains Mono', monospace;
-    font-size:26px;
-    font-weight:700;
-    color:var(--text);
-  }
-  .stats .stat .lbl{
-    font-size:13px;
-    color:var(--muted);
-    margin-top:4px;
+  ::selection { background: var(--accent); color: #fff; }
+
+  a { color: inherit; }
+
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    direction: ltr;
+    unicode-bidi: isolate;
   }
 
-  /* ---------- SECTION TITLES ---------- */
-  section{ padding:56px 0; }
-  .sec-head{ margin-bottom:28px; }
-  .sec-head h2{
-    font-size:24px;
-    font-weight:800;
-    margin:0 0 8px;
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
   }
-  .sec-head p{
-    color:var(--muted);
-    margin:0;
-    font-size:15px;
+
+  /* ============================================================
+     BACKGROUND — blobs + grain + vignette
+     ============================================================ */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background:
+      radial-gradient(90% 58% at 14% 6%,  color-mix(in srgb, var(--blob-2) 24%, transparent), transparent 62%),
+      radial-gradient(85% 55% at 86% 94%, color-mix(in srgb, var(--blob-3) 22%, transparent), transparent 62%),
+      linear-gradient(170deg, var(--base) 0%, var(--base-2) 100%);
+    pointer-events: none;
   }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: var(--blob-op);
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  .blob-1 {
+    width: 52vw; height: 52vw; min-width: 340px; min-height: 340px;
+    background: radial-gradient(circle at 30% 30%, var(--blob-1) 0%, color-mix(in srgb, var(--blob-1) 0%, transparent) 70%);
+    top: -14vh; inset-inline-start: -10vw;
+    animation: drift-a 34s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 44vw; height: 44vw; min-width: 300px; min-height: 300px;
+    background: radial-gradient(circle at 60% 40%, var(--blob-2) 0%, color-mix(in srgb, var(--blob-2) 0%, transparent) 70%);
+    top: 6vh; inset-inline-end: -12vw;
+    animation: drift-b 27s ease-in-out infinite;
+  }
+  .blob-3 {
+    width: 38vw; height: 38vw; min-width: 260px; min-height: 260px;
+    background: radial-gradient(circle at 45% 55%, var(--blob-3) 0%, color-mix(in srgb, var(--blob-3) 0%, transparent) 70%);
+    top: 62vh; inset-inline-start: 4vw;
+    animation: drift-c 39s ease-in-out infinite;
+  }
+  .blob-4 {
+    width: 34vw; height: 34vw; min-width: 240px; min-height: 240px;
+    background: radial-gradient(circle at 50% 50%, var(--blob-4) 0%, color-mix(in srgb, var(--blob-4) 0%, transparent) 70%);
+    top: 84vh; inset-inline-end: 4vw;
+    animation: drift-a 31s ease-in-out infinite reverse;
+  }
+  .blob-5 {
+    width: 30vw; height: 30vw; min-width: 220px; min-height: 220px;
+    background: radial-gradient(circle at 40% 60%, var(--blob-5) 0%, color-mix(in srgb, var(--blob-5) 0%, transparent) 70%);
+    top: 34vh; inset-inline-start: 26vw;
+    animation: drift-b 44s ease-in-out infinite;
+  }
+
+  @keyframes drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    33%      { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
+    66%      { transform: translate3d(-4vw, 7vh, 0) scale(0.94); }
+  }
+  @keyframes drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    40%      { transform: translate3d(-7vw, 6vh, 0) scale(1.16); }
+    70%      { transform: translate3d(3vw, -3vh, 0) scale(0.9); }
+  }
+  @keyframes drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(5vw, -6vh, 0) scale(1.2); }
+  }
+
+  /* grain */
+  .grain {
+    position: absolute;
+    inset: -50%;
+    opacity: var(--grain-op);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+  }
+
+  /* vignette */
+  .bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0,0,0,0.22) 100%);
+    pointer-events: none;
+  }
+  :root:not([data-theme="dark"]) .bg::after { background: radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(40,50,80,0.10) 100%); }
+
+  /* ============================================================
+     THE GLASS RECIPE
+     ============================================================ */
+  .glass {
+    position: relative;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--glass-brd);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-hi);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass { background: var(--base); }
+    :root[data-theme="dark"] .glass,
+    :root:not([data-theme="light"]) .glass { background: #15161C; }
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  header.site {
+    position: sticky;
+    top: 12px;
+    z-index: 30;
+    margin: 12px auto 0;
+    max-width: 1000px;
+    width: calc(100% - 32px);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 14px 11px 18px;
+    border-radius: 16px;
+    transition: box-shadow .2s ease, background .2s ease;
+  }
+
+  .nav .brand {
+    font-weight: 800;
+    font-size: 15.5px;
+    letter-spacing: .2px;
+    white-space: nowrap;
+  }
+  .nav .brand .mono { color: var(--accent); font-weight: 600; font-size: 13.5px; }
+
+  .nav .side {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav .links { display: flex; gap: 4px; }
+
+  .nav .links a {
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 7px 13px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: color .16s ease, background .16s ease, border-color .16s ease;
+  }
+  .nav .links a:hover {
+    color: var(--text);
+    background: var(--glass-2);
+    border-color: var(--glass-brd);
+  }
+
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    border: 1px solid var(--glass-brd);
+    background: var(--glass-2);
+    color: var(--text);
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition: background .16s ease, transform .16s ease, border-color .16s ease;
+  }
+  .icon-btn:hover { background: var(--chip); transform: translateY(-1px); }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  /* آیکون بر اساس تمِ واقعیِ جاری (data-mode) توسط JS تنظیم می‌شود */
+  .icon-btn .i-sun  { display: none; }
+  .icon-btn .i-moon { display: block; }
+  .icon-btn[data-mode="light"] .i-sun  { display: block; }
+  .icon-btn[data-mode="light"] .i-moon { display: none; }
+
+  /* focus ring — global */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    padding: 72px 0 52px;
+    max-width: 760px;
+  }
+
+  .hero .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-2);
+    font-size: 13.5px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--chip);
+    border: 1px solid var(--chip-brd);
+  }
+  .hero .kicker::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 22%, transparent);
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 3.6vw, 39px);
+    line-height: 1.34;
+    font-weight: 900;
+    margin: 0 0 20px;
+    letter-spacing: -0.3px;
+    text-wrap: balance;
+  }
+
+  .hero p.bio {
+    color: var(--text-2);
+    font-size: 16.5px;
+    max-width: 50ch;
+    margin: 0 0 28px;
+  }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--glass-brd);
+    background: var(--chip);
+    color: var(--text);
+    cursor: pointer;
+    transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+  .btn:hover { transform: translateY(-2px); background: var(--glass-hi); }
+  .btn:active { transform: translateY(0); }
+
+  .btn.primary {
+    background: var(--text);
+    color: var(--base);
+    border-color: var(--text);
+    box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--text) 70%, transparent);
+  }
+  .btn.primary:hover { background: var(--text); filter: brightness(1.08); }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* ============================================================
+     STATS
+     ============================================================ */
+  .stats {
+    display: flex;
+    padding: 24px 8px;
+    border-radius: 20px;
+  }
+  .stats .stat {
+    flex: 1;
+    text-align: center;
+    border-inline-start: 1px solid var(--hair);
+    padding: 2px 8px;
+  }
+  .stats .stat:first-child { border-inline-start: none; }
+  .stats .stat .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stats .stat .lbl { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
+
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  section { padding: 60px 0; }
+
+  .sec-head { margin-bottom: 26px; }
+  .sec-head h2 {
+    font-size: 25px;
+    font-weight: 800;
+    margin: 0 0 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .sec-head h2::before {
+    content: '';
+    width: 5px; height: 26px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+  .sec-head p { color: var(--muted); margin: 0; font-size: 14.5px; }
 
   /* ---------- ABOUT ---------- */
-  .about p{ max-width:68ch; color:var(--text); font-size:16px; }
-  .skills-list{
-    list-style:none; margin:20px 0 0; padding:0;
-    display:flex; flex-direction:column; gap:10px;
+  .about-panel { padding: 32px 34px; border-radius: 22px; }
+  .about-panel > p { color: var(--text-2); font-size: 15.5px; margin: 0; }
+
+  .skills-list {
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 22px 0 0;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
   }
-  .skills-list li{
-    display:flex; flex-direction:column; gap:8px; align-items:flex-start;
-    margin:0; padding:0;
+  .skills-list li {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    margin: 0;
   }
-  .skills-list .chips{
-    display:flex; flex-wrap:wrap; gap:8px;
-    margin:0; padding:0;
+  .skills-list .grp {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent);
   }
-  .skills-list li span{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    padding:6px 12px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    color:var(--muted);
+  .skills-list .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0; padding: 0;
   }
-  .skills-list .grp{
-    border:none;
-    padding:6px 0;
-    min-width:130px;
-    color:var(--accent);
-    font-weight:700;
-    font-size:13px;
+  .skills-list .chips span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: var(--chip);
+    border: 1px solid var(--chip-brd);
+    color: var(--text-2);
+    transition: background .16s ease, color .16s ease, transform .16s ease;
+  }
+  .skills-list .chips span:hover {
+    background: var(--accent-soft);
+    color: var(--text);
+    transform: translateY(-1px);
   }
 
-  /* ---------- PROJECTS: file tree ---------- */
-  .filetree{
-    border:1px solid var(--border);
-    border-radius:10px;
-    overflow:hidden;
-    background:var(--surface);
+  /* ---------- PROJECTS ---------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 16px;
   }
-  .frow{
-    display:grid;
-    grid-template-columns: 22px 1fr auto auto;
-    align-items:center;
-    gap:14px;
-    padding:16px 18px;
-    text-decoration:none;
-    color:var(--text);
-    border-bottom:1px solid var(--border);
-    transition:background .15s ease;
+
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px 22px 20px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: var(--text);
+    overflow: hidden;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, background .22s ease, border-color .22s ease;
   }
-  .frow:last-child{ border-bottom:none; }
-  .frow:hover{ background:var(--surface-2); }
-  .frow .icon{ display:flex; }
-  .frow .icon svg{ width:16px; height:16px; stroke:var(--accent); }
-  .frow .name{ font-weight:700; font-size:15px; }
-  .frow .desc{
-    grid-column:2 / span 3;
-    color:var(--muted);
-    font-size:13.5px;
-    margin-top:4px;
+  .pcard::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--pc, var(--accent));
+    opacity: .55;
+    transition: opacity .22s ease, width .22s ease;
   }
-  .frow .lang{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:var(--muted);
-    display:flex; align-items:center; gap:6px;
+  .pcard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--pc-soft, transparent), transparent 62%);
+    opacity: 0;
+    transition: opacity .28s ease;
+    pointer-events: none;
   }
-  .frow .lang .sw{ width:8px; height:8px; border-radius:50%; }
-  .lang-kotlin .sw{ background:#7F52FF; }
-  .lang-java .sw{ background:#B07219; }
-  .lang-php .sw{ background:#777BB4; }
-  .lang-js .sw{ background:#F7DF1E; }
-  .frow .stars{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:var(--muted);
+  .pcard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card), inset 0 1px 0 var(--glass-hi);
+    border-color: var(--glass-hi);
   }
-  .frow-grid{ display:grid; }
+  .pcard:hover::before { opacity: 1; width: 4px; }
+  .pcard:hover::after { opacity: .10; }
+  .pcard > * { position: relative; z-index: 1; }
+
+  .pcard .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .pcard .name {
+    font-weight: 800;
+    font-size: 16.5px;
+    letter-spacing: .2px;
+    word-break: break-word;
+  }
+  .pcard .icon {
+    display: grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    flex: 0 0 auto;
+    transition: background .22s ease;
+  }
+  .pcard .icon svg { width: 17px; height: 17px; stroke: var(--accent); }
+
+  .pcard .desc {
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+  }
+
+  .pcard .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--hair);
+  }
+  .pcard .lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .pcard .lang .sw {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--pc);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pc) 20%, transparent);
+  }
+  .pcard .stars {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  /* language accents */
+  .lang-kotlin { --pc: #7F52FF; --pc-soft: rgba(127, 82, 255, .55); }
+  .lang-java   { --pc: #B07219; --pc-soft: rgba(176, 114, 25, .55); }
+  .lang-php    { --pc: #777BB4; --pc-soft: rgba(119, 123, 180, .55); }
+  .lang-js     { --pc: #F7DF1E; --pc-soft: rgba(247, 223, 30, .55); }
 
   /* ---------- CONTACT ---------- */
-  .contact{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:40px;
-    text-align:center;
+  .contact {
+    padding: 44px 36px;
+    border-radius: 24px;
+    text-align: center;
   }
-  .contact h2{ font-size:24px; font-weight:800; margin:0 0 10px; }
-  .contact p{ color:var(--muted); margin:0 0 26px; }
-  .contact .cta-row{ justify-content:center; }
+  .contact h2 { font-size: 25px; font-weight: 800; margin: 0 0 10px; }
+  .contact p { color: var(--muted); margin: 0 0 26px; }
+  .contact .cta-row { justify-content: center; }
 
-  footer{
-    padding:32px 0 60px;
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
+  footer {
+    padding: 36px 0 64px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
   }
-  footer .mono{ opacity:.8; }
+  footer .mono { opacity: .8; }
 
-  @media (max-width:720px){
-    .hero{ grid-template-columns:1fr; padding-top:52px; }
-    .stats{ flex-wrap:wrap; }
-    .stats .stat{ flex:1 1 50%; border-inline-start:none; border-top:1px solid var(--border); padding-top:16px; margin-top:16px;}
-    .stats .stat:nth-child(-n+2){ border-top:none; margin-top:0; padding-top:0; }
-    .frow{ grid-template-columns: 20px 1fr auto; }
-    .frow .desc{ grid-column: 2 / span 2; }
+  /* ============================================================
+     SCROLL REVEAL (progressive enhancement)
+     ============================================================ */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  html.js .reveal.in { opacity: 1; transform: none; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 860px) {
+    .hero { padding-top: 48px; }
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    header.site { top: 8px; margin-top: 8px; width: calc(100% - 20px); }
+    .nav { flex-wrap: wrap; padding: 10px 12px; }
+    .nav .links { order: 3; width: 100%; justify-content: space-between; gap: 0; }
+    .nav .links a { flex: 1; text-align: center; padding: 7px 4px; font-size: 13px; }
+    .nav .brand { font-size: 14.5px; }
+
+    .stats { flex-wrap: wrap; padding: 20px 6px; }
+    .stats .stat { flex: 1 1 50%; border-inline-start: none; padding: 12px 6px; }
+    .stats .stat:nth-child(odd) { border-inline-end: 1px solid var(--hair); }
+    .stats .stat .num { font-size: 23px; }
+
+    .about-panel { padding: 24px 20px; }
+    .skills-list li { grid-template-columns: 1fr; gap: 8px; }
+    .contact { padding: 34px 20px; }
+    .blob { filter: blur(70px); }
+  }
+
+  /* ============================================================
+     REDUCED MOTION
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .blob { animation: none !important; }
+    html.js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .btn:hover, .pcard:hover, .icon-btn:hover { transform: none; }
+    * { transition-duration: .01ms !important; }
   }
 </style>
 </head>
 <body>
 
+<div class="bg" aria-hidden="true">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+  <span class="blob blob-4"></span>
+  <span class="blob blob-5"></span>
+  <span class="grain"></span>
+</div>
+
 <header class="site">
-  <nav class="nav">
+  <nav class="nav glass" aria-label="ناوبری اصلی">
     <div class="brand">امیر بهادر امیری <span class="mono">/ dev</span></div>
-    <div class="links">
-      <a href="#projects">پروژه‌ها</a>
-      <a href="#about">درباره من</a>
-      <a href="#contact">تماس</a>
+    <div class="side">
+      <div class="links">
+        <a href="#projects">پروژه‌ها</a>
+        <a href="#about">درباره من</a>
+        <a href="#contact">تماس</a>
+      </div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="تغییر تم روشن و تیره" title="تغییر تم">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+        </svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
+        </svg>
+      </button>
     </div>
   </nav>
 </header>
 
-<div class="wrap">
+<main class="wrap">
 
   <section class="hero">
     <div>
@@ -374,27 +744,19 @@
       <h1>اپلیکیشن می‌سازم؛ تمیز، پایدار و قابل نگهداری.</h1>
       <p class="bio">توسعه‌دهنده اندرویدم؛ با Kotlin و Java اپ می‌سازم و بک‌اند و ابزارهای وب را با PHP می‌نویسم. از اپ‌های حسابداری فروشگاه‌ها تا کتابخانه‌های متن‌باز UI. کد را برای خواندن می‌نویسم، نه فقط برای اجرا شدن.</p>
       <div class="cta-row">
-        <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">مشاهده گیت‌هاب</a>
-        <a class="btn ghost" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">گفتگو در تلگرام</a>
+        <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.89-.01-1.75-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          مشاهده گیت‌هاب
+        </a>
+        <a class="btn" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.1c-.24 1.06-.87 1.32-1.76.82l-4.86-3.58-2.35 2.26c-.26.26-.48.48-.98.48l.35-4.99 9.1-8.22c.4-.35-.08-.54-.61-.2L6.07 12.87 1.2 11.3c-1.06-.33-1.08-1.06.22-1.57L20.5 2.9c.88-.32 1.65.2 1.4 1.4Z"/></svg>
+          گفتگو در تلگرام
+        </a>
       </div>
-    </div>
-
-    <div class="terminal">
-      <div class="bar">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="filename mono">Amir.kt</span>
-      </div>
-      <pre class="mono"><code
-><span class="type-line l1" style="--w:100%"><span class="tok-cm">// 📱 Android Developer</span></span>
-<span class="type-line l2" style="--w:100%"><span class="tok-kw">class</span> <span class="tok-fn">AmirBahadorAmiri</span> : Developer() {</span>
-<span class="type-line l3" style="--w:100%">    <span class="tok-kw">val</span> stack = listOf(<span class="tok-str">"Kotlin"</span>, <span class="tok-str">"Java"</span>, <span class="tok-str">"PHP"</span>, <span class="tok-str">"JavaScript"</span>)</span>
-<span class="type-line l4" style="--w:100%">    <span class="tok-kw">val</span> repos = 48</span>
-<span class="type-line l5" style="--w:100%">    <span class="tok-kw">fun</span> <span class="tok-fn">build</span>() = <span class="tok-str">"چیزهای خوب و پایدار"</span></span>
-<span class="type-line l6" style="--w:100%">}<span class="cursor"></span></span></code></pre>
     </div>
   </section>
 
-  <div class="stats">
+  <div class="stats glass reveal">
     <div class="stat"><div class="num">48</div><div class="lbl">مخزن عمومی</div></div>
     <div class="stat"><div class="num">118</div><div class="lbl">ستاره</div></div>
     <div class="stat"><div class="num">126</div><div class="lbl">دنبال‌کننده</div></div>
@@ -402,117 +764,143 @@
   </div>
 
   <section id="about" class="about">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>درباره من</h2>
       <p>خلاصه‌ای از حوزه کاری و ابزارهایی که باهاشون کار می‌کنم.</p>
     </div>
-    <p>تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML ،CSS و JavaScript آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.</p>
-    <ul class="skills-list">
-      <li>
-        <span class="grp">سیستم‌عامل</span>
-        <div class="chips"><span>Windows</span><span>Linux</span></div>
-      </li>
-      <li>
-        <span class="grp">زبان‌ها</span>
-        <div class="chips"><span>Kotlin</span><span>Java</span><span>Android</span><span>PHP</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
-      </li>
-      <li>
-        <span class="grp">ابزار کدنویسی</span>
-        <div class="chips"><span>Android Studio</span><span>PhpStorm</span><span>VS Code</span></div>
-      </li>
-      <li>
-        <span class="grp">گیت</span>
-        <div class="chips"><span>Git</span><span>GitHub</span><span>GitHub Desktop</span><span>GitKraken</span><span>SmartGit</span><span>GitForce</span><span>Sourcetree</span><span>TortoiseGit</span><span>Fork</span><span>Tower</span></div>
-      </li>
-      <li>
-        <span class="grp">تست API</span>
-        <div class="chips"><span>Postman</span><span>Bruno</span><span>Yaak</span><span>HTTPie</span></div>
-      </li>
-      <li>
-        <span class="grp">دیزاین</span>
-        <div class="chips"><span>Adobe XD</span></div>
-      </li>
-    </ul>
+    <div class="about-panel glass reveal">
+      <p>تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML ،CSS و JavaScript آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.</p>
+      <ul class="skills-list">
+        <li>
+          <span class="grp">سیستم‌عامل</span>
+          <div class="chips"><span>Windows</span><span>Linux</span></div>
+        </li>
+        <li>
+          <span class="grp">زبان‌ها</span>
+          <div class="chips"><span>Kotlin</span><span>Java</span><span>Android</span><span>PHP</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+        </li>
+        <li>
+          <span class="grp">ابزار کدنویسی</span>
+          <div class="chips"><span>Android Studio</span><span>PhpStorm</span><span>VS Code</span></div>
+        </li>
+        <li>
+          <span class="grp">گیت</span>
+          <div class="chips"><span>Git</span><span>GitHub</span><span>GitHub Desktop</span><span>GitKraken</span><span>SmartGit</span><span>GitForce</span><span>Sourcetree</span><span>TortoiseGit</span><span>Fork</span><span>Tower</span></div>
+        </li>
+        <li>
+          <span class="grp">تست API</span>
+          <div class="chips"><span>Postman</span><span>Bruno</span><span>Yaak</span><span>HTTPie</span></div>
+        </li>
+        <li>
+          <span class="grp">دیزاین</span>
+          <div class="chips"><span>Adobe XD</span></div>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <section id="projects">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>پروژه‌های منتخب</h2>
       <p>شش مخزنی که در پروفایل گیت‌هابم پین شده‌اند.</p>
     </div>
 
-    <div class="filetree">
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">KalaYar</span>
-        <span class="lang lang-kotlin"><span class="sw"></span>Kotlin</span>
-        <span class="stars">★ 4</span>
-        <span class="desc">یک نرم‌افزار ساده برای حسابداری فروشگاه‌ها</span>
+    <div class="cards">
+      <a class="pcard glass reveal lang-kotlin" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">KalaYar</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">یک نرم‌افزار ساده برای حسابداری فروشگاه‌ها</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>Kotlin</span>
+          <span class="stars">★ 4</span>
+        </div>
       </a>
 
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">TelegramDialog</span>
-        <span class="lang lang-java"><span class="sw"></span>Java</span>
-        <span class="stars">★ 4</span>
-        <span class="desc">کتابخانه‌ای برای ساخت دیالوگ‌های سبک تلگرام در اندروید با تنظیمات انعطاف‌پذیر</span>
+      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">TelegramDialog</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">کتابخانه‌ای برای ساخت دیالوگ‌های سبک تلگرام در اندروید با تنظیمات انعطاف‌پذیر</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>Java</span>
+          <span class="stars">★ 4</span>
+        </div>
       </a>
 
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">LogStream</span>
-        <span class="lang lang-php"><span class="sw"></span>PHP</span>
-        <span class="stars">★ 2</span>
-        <span class="desc">ابزار مدیریت و مشاهده لاگ‌ها</span>
+      <a class="pcard glass reveal lang-php" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">LogStream</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">ابزار مدیریت و مشاهده لاگ‌ها</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>PHP</span>
+          <span class="stars">★ 2</span>
+        </div>
       </a>
 
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">GPTelegramBot</span>
-        <span class="lang lang-js"><span class="sw"></span>JavaScript</span>
-        <span class="stars">★ 2</span>
-        <span class="desc">ربات تلگرام مبتنی بر GPT</span>
+      <a class="pcard glass reveal lang-js" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">GPTelegramBot</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">ربات تلگرام مبتنی بر GPT</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>JavaScript</span>
+          <span class="stars">★ 2</span>
+        </div>
       </a>
 
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">DEFINEit</span>
-        <span class="lang lang-java"><span class="sw"></span>Java</span>
-        <span class="stars">★ 2</span>
-        <span class="desc">برنامه فرهنگ لغت و تعریف واژه‌ها</span>
+      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">DEFINEit</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">برنامه فرهنگ لغت و تعریف واژه‌ها</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>Java</span>
+          <span class="stars">★ 2</span>
+        </div>
       </a>
 
-      <a class="frow" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
-        <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="name">AppleNote</span>
-        <span class="lang lang-java"><span class="sw"></span>Java</span>
-        <span class="stars">★ 4</span>
-        <span class="desc">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP</span>
+      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">AppleNote</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP</p>
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>Java</span>
+          <span class="stars">★ 4</span>
+        </div>
       </a>
     </div>
   </section>
 
   <section id="contact">
-    <div class="contact">
+    <div class="contact glass reveal">
       <h2>بیایید در ارتباط باشیم</h2>
       <p>برای همکاری، سوال درباره پروژه‌ها یا فقط یک سلام ساده.</p>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">گیت‌هاب</a>
-        <a class="btn ghost" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">تلگرام</a>
-        <a class="btn ghost" href="mailto:bahadoramiri.report@gmail.com">ایمیل</a>
-        <a class="btn ghost" href="https://AmirBahadorAmiri.github.io" target="_blank" rel="noopener">وب‌سایت</a>
+        <a class="btn" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">تلگرام</a>
+        <a class="btn" href="mailto:bahadoramiri.report@gmail.com">ایمیل</a>
+        <a class="btn" href="https://AmirBahadorAmiri.github.io" target="_blank" rel="noopener">وب‌سایت</a>
       </div>
     </div>
   </section>
@@ -523,7 +911,222 @@
     <span>Made with ❤️ by Amir</span>
   </footer>
 
-</div>
+</main>
+
+<script>
+  /* ---------- theme toggle ---------- */
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    if (!btn) return;
+
+    function systemIsDark() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function currentIsDark() {
+      var attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'dark') return true;
+      if (attr === 'light') return false;
+      return systemIsDark();
+    }
+
+    function sync() {
+      btn.setAttribute('data-mode', currentIsDark() ? 'dark' : 'light');
+    }
+
+    sync();
+
+    btn.addEventListener('click', function () {
+      var next = currentIsDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      sync();
+    });
+
+    /* اگر تم دستی انتخاب نشده، با تغییر تم سیستم آیکون هم هماهنگ شود */
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    if (mq) {
+      var onChange = function () {
+        if (!document.documentElement.getAttribute('data-theme')) sync();
+      };
+      if (mq.addEventListener) mq.addEventListener('change', onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    }
+  })();
+
+  /* ---------- scroll reveal ---------- */
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < items.length; i++) items[i].classList.add('in');
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    for (var i = 0; i < items.length; i++) io.observe(items[i]);
+
+    /* شبکه ایمنی: اگر observer چیزی را فعال نکرد، همه‌چیز ظاهر شود */
+    setTimeout(function () {
+      for (var j = 0; j < items.length; j++) items[j].classList.add('in');
+    }, 2200);
+  })();
+
+  /* ---------- pointer glow روی کارت پروژه‌ها ---------- */
+  (function () {
+    var cards = document.querySelectorAll('.pcard');
+    for (var i = 0; i < cards.length; i++) {
+      (function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      })(cards[i]);
+    }
+  })();
+
+  /* ---------- اسکرول نرم ---------- */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce && reduce.matches) return;   /* احترام به تنظیم کاربر */
+
+    var EASE = 0.1;            /* کمتر = کندتر و نرم‌تر */
+    var root = document.documentElement;
+    var cur = 0, tgt = 0, running = false, tv = 0, glideId = 0;
+
+    function maxScroll() { return Math.max(0, root.scrollHeight - window.innerHeight); }
+    function clamp(v) { return v < 0 ? 0 : (v > maxScroll() ? maxScroll() : v); }
+
+    function tick() {
+      var d = tgt - cur;
+      if (Math.abs(d) < 0.3) {
+        cur = tgt;
+        window.scrollTo(0, cur);
+        running = false;
+        return;
+      }
+      cur += d * EASE;
+      window.scrollTo(0, cur);
+      requestAnimationFrame(tick);
+    }
+
+    /* حرکت نرم به سمت هدف */
+    function go(v) {
+      tgt = clamp(v);
+      if (!running) { running = true; requestAnimationFrame(tick); }
+    }
+
+    /* پرش فوری و هم‌راستاسازی با موقعیت واقعی */
+    function jump(v) {
+      cur = tgt = clamp(v);
+      window.scrollTo(0, cur);
+    }
+
+    root.classList.add('smooth-scroll');
+
+    /* ---------- چرخ ماوس و تاچ‌پد ---------- */
+    addEventListener('wheel', function (e) {
+      if (e.ctrlKey) return;          /* Ctrl+چرخ = زوم مرورگر، دست‌نخورده */
+      e.preventDefault();
+      glideId++;
+      var d = e.deltaY;
+      if (e.deltaMode === 1) d *= 16;
+      else if (e.deltaMode === 2) d *= window.innerHeight;
+      go(tgt + d);
+    }, { passive: false });
+
+    /* ---------- لمسی با اینرسی ---------- */
+    var lastY = 0;
+
+    addEventListener('touchstart', function (e) {
+      glideId++;
+      jump(window.scrollY);
+      lastY = e.touches[0].clientY;
+    }, { passive: true });
+
+    addEventListener('touchmove', function (e) {
+      e.preventDefault();
+      var y = e.touches[0].clientY;
+      tv = lastY - y;
+      go(tgt + tv);
+      lastY = y;
+    }, { passive: false });
+
+    addEventListener('touchend', function () {
+      /* ادامه با سرعت کهشونده تا حس اینرسی گوشی حفظ شود */
+      var id = ++glideId;
+      var v = tv;
+      (function glide() {
+        if (id !== glideId) return;
+        v *= 0.92;
+        if (Math.abs(v) < 0.6) return;
+        go(tgt + v);
+        requestAnimationFrame(glide);
+      })();
+    }, { passive: true });
+
+    /* ---------- کیبورد ---------- */
+    addEventListener('keydown', function (e) {
+      var t = e.target;
+      var tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      var h = window.innerHeight, dest = null;
+      switch (e.key) {
+        case 'ArrowDown': dest = tgt + 90; break;
+        case 'ArrowUp':   dest = tgt - 90; break;
+        case 'PageDown':  dest = tgt + h * 0.85; break;
+        case 'PageUp':    dest = tgt - h * 0.85; break;
+        case ' ':         dest = tgt + (e.shiftKey ? -h * 0.85 : h * 0.85); break;
+        case 'Home':      dest = 0; break;
+        case 'End':       dest = maxScroll(); break;
+        default: return;
+      }
+      e.preventDefault();
+      glideId++;
+      go(dest);
+    });
+
+    /* ---------- پیوندهای داخلی ---------- */
+    function anchorOffset() {
+      var h = document.querySelector('header.site');
+      /* ارتفاع واقعی هدر + کمی فاصله، تا با هر اندازه‌ی زوم خودش را تنظیم کند */
+      return h ? Math.round(h.getBoundingClientRect().height) + 36 : 96;
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.length < 2) return;
+      var el = document.getElementById(href.slice(1));
+      if (!el) return;
+      e.preventDefault();
+      glideId++;
+      go(el.getBoundingClientRect().top + window.scrollY - anchorOffset());
+    });
+
+    /* ---------- اسکرول بیرونی: کشیدن اسکرول‌بار، جستجوی صفحه ---------- */
+    addEventListener('scroll', function () {
+      if (running) return;
+      if (Math.abs(window.scrollY - cur) > 2) jump(window.scrollY);
+    }, { passive: true });
+
+    /* ---------- تغییر ارتفاع صفحه ---------- */
+    addEventListener('resize', function () {
+      tgt = clamp(tgt);
+      cur = clamp(cur);
+    });
+  })();
+</script>
 
 </body>
 </html>
