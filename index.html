@@ -332,6 +332,7 @@
     flex-direction: column;
     gap: 12px;
     padding: 22px 24px 20px;
+    min-height: 430px;
     background: var(--surface);
     border: 1px solid var(--hair);
     border-radius: var(--radius);
@@ -385,6 +386,17 @@
     line-height: 1.7;
     margin: 0;
     flex: 1;
+  }
+
+  /* اسکرین‌شات پروژه — از داخل README همان مخزن */
+  .pcard .shot {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 10px;
+    border: 1px solid var(--hair);
+    background: var(--bg);
   }
 
   .pcard .meta {
@@ -494,6 +506,7 @@
     .about-panel { padding: 24px 20px; }
     .skills-list li { grid-template-columns: 1fr; gap: 8px; }
     .contact { padding: 36px 20px; }
+    .pcard { min-height: 400px; }
   }
 
   /* ============================================================
@@ -542,10 +555,10 @@
   </section>
 
   <div class="stats reveal">
-    <div class="stat"><div class="num">48</div><div class="lbl">مخزن عمومی</div></div>
-    <div class="stat"><div class="num">118</div><div class="lbl">ستاره</div></div>
-    <div class="stat"><div class="num">126</div><div class="lbl">دنبال‌کننده</div></div>
-    <div class="stat"><div class="num">80</div><div class="lbl">دنبال‌شونده</div></div>
+    <div class="stat"><div class="num" id="stat-repos">50</div><div class="lbl">مخزن عمومی</div></div>
+    <div class="stat"><div class="num" id="stat-stars">124</div><div class="lbl">ستاره</div></div>
+    <div class="stat"><div class="num" id="stat-followers">125</div><div class="lbl">دنبال‌کننده</div></div>
+    <div class="stat"><div class="num" id="stat-following">87</div><div class="lbl">دنبال‌شونده</div></div>
   </div>
 
   <section id="about" class="about">
@@ -591,63 +604,97 @@
     </div>
 
     <div class="cards">
-      <a class="pcard reveal lang-kotlin" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-php" data-repo="Rangban" href="https://github.com/AmirBahadorAmiri/Rangban" target="_blank" rel="noopener">
         <div class="top">
-          <span class="name">KalaYar</span>
+          <span class="name">Rangban</span>
           <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
-        <p class="desc">یک نرم‌افزار ساده برای حسابداری فروشگاه‌ها</p>
+        <p class="desc">ساخت، سازمان‌دهی و خروجی گرفتن از پالت‌های رنگی با رابط فارسی</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/Rangban/main/assets/screenshot/screen1.png" alt="اسکرین‌شات Rangban" loading="lazy">
         <div class="meta">
-          <span class="lang"><span class="sw"></span>Kotlin</span>
-          <span class="stars">★ 4</span>
+          <span class="lang"><span class="sw"></span>PHP</span>
+          <span class="stars">★ 0</span>
         </div>
       </a>
 
-      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-php" data-repo="Timo" href="https://github.com/AmirBahadorAmiri/Timo" target="_blank" rel="noopener">
         <div class="top">
-          <span class="name">TelegramDialog</span>
+          <span class="name">Timo</span>
           <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
-        <p class="desc">کتابخانه‌ای برای ساخت دیالوگ‌های سبک تلگرام در اندروید با تنظیمات انعطاف‌پذیر</p>
+        <p class="desc">مدیریت وظایف ویژهٔ توسعه‌دهنده‌ها با ساختار اپلیکیشن، پوشه و تسک، به‌همراه تایمر پومودورو و رابط دوزبانه</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/Timo/master/screenshot/screenshot.png" alt="اسکرین‌شات Timo" loading="lazy">
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>PHP</span>
+          <span class="stars">★ 0</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal lang-php" data-repo="CodePoint" href="https://github.com/AmirBahadorAmiri/CodePoint" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">CodePoint</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">مدیریت اسنیپت‌های کد با رابط راست‌به‌چپ و تم روشن و تیره</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/CodePoint/main/screenshot/screenshot.png" alt="اسکرین‌شات CodePoint" loading="lazy">
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>PHP</span>
+          <span class="stars">★ 0</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal lang-java" data-repo="AppleNote" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">AppleNote</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP در اندروید</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/AppleNote/master/screenshots/screen1.jpg" alt="اسکرین‌شات AppleNote" loading="lazy">
         <div class="meta">
           <span class="lang"><span class="sw"></span>Java</span>
           <span class="stars">★ 4</span>
         </div>
       </a>
 
-      <a class="pcard reveal lang-php" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-java" data-repo="QuickMail" href="https://github.com/AmirBahadorAmiri/QuickMail" target="_blank" rel="noopener">
         <div class="top">
-          <span class="name">LogStream</span>
+          <span class="name">QuickMail</span>
           <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
-        <p class="desc">ابزار مدیریت و مشاهده لاگ‌ها</p>
+        <p class="desc">پوشهٔ سبک اندرویدی روی JavaMail برای ارسال ایمیل SMTP با API روان و تک‌خطی</p>
+        <img class="shot" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='480'%20height='300'%20viewBox='0%200%20480%20300'%3E%3Crect%20width='480'%20height='300'%20fill='%23F7EDEB'/%3E%3Cg%20fill='none'%20stroke='%23BC7773'%20stroke-width='10'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='150'%20y='80'%20width='180'%20height='140'%20rx='14'/%3E%3Ccircle%20cx='200'%20cy='126'%20r='12'%20fill='%23BC7773'%20stroke='none'/%3E%3Cpath%20d='M160%20206l44-44%2030%2030%2036-42%2050%2056'/%3E%3C/g%3E%3C/svg%3E" alt="اسکرین‌شاتی برای QuickMail ثبت نشده" loading="lazy">
         <div class="meta">
-          <span class="lang"><span class="sw"></span>PHP</span>
-          <span class="stars">★ 2</span>
+          <span class="lang"><span class="sw"></span>Java</span>
+          <span class="stars">★ 0</span>
         </div>
       </a>
 
-      <a class="pcard reveal lang-js" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-js" data-repo="Snake1997" href="https://github.com/AmirBahadorAmiri/Snake1997" target="_blank" rel="noopener">
         <div class="top">
-          <span class="name">GPTelegramBot</span>
+          <span class="name">Snake1997</span>
           <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
-        <p class="desc">ربات تلگرام مبتنی بر GPT</p>
+        <p class="desc">بازی مار به سبک نوکیا 3310 با HTML، CSS و JavaScript خالص</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/Snake1997/master/screenshot.png" alt="اسکرین‌شات Snake1997" loading="lazy">
         <div class="meta">
           <span class="lang"><span class="sw"></span>JavaScript</span>
-          <span class="stars">★ 2</span>
+          <span class="stars">★ 0</span>
         </div>
       </a>
 
-      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-java" data-repo="DEFINEit" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">DEFINEit</span>
           <span class="icon">
@@ -655,23 +702,55 @@
           </span>
         </div>
         <p class="desc">برنامه فرهنگ لغت و تعریف واژه‌ها</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/DEFINEit/master/screenshots/screen1.jpg" alt="اسکرین‌شات DEFINEit" loading="lazy">
         <div class="meta">
           <span class="lang"><span class="sw"></span>Java</span>
           <span class="stars">★ 2</span>
         </div>
       </a>
 
-      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-kotlin" data-repo="KalaYar" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
         <div class="top">
-          <span class="name">AppleNote</span>
+          <span class="name">KalaYar</span>
           <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
-        <p class="desc">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP</p>
+        <p class="desc">نرم‌افزار ساده برای حسابداری فروشگاه‌ها</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/KalaYar/master/adobe%20xd/store_screen/screen1.png" alt="اسکرین‌شات KalaYar" loading="lazy">
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>Kotlin</span>
+          <span class="stars">★ 4</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal lang-php" data-repo="CoffeShopMenu" href="https://github.com/AmirBahadorAmiri/CoffeShopMenu" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">CoffeShopMenu</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">تابلوی قیمت زندهٔ کافه با پنل مدیریت و به‌روزرسانی خودکار هر ۳۰ ثانیه</p>
+        <img class="shot" src="https://raw.githubusercontent.com/AmirBahadorAmiri/CoffeShopMenu/main/docs/menu-board.png" alt="اسکرین‌شات CoffeShopMenu" loading="lazy">
+        <div class="meta">
+          <span class="lang"><span class="sw"></span>PHP</span>
+          <span class="stars">★ 2</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal lang-java" data-repo="TelegramDialog" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="name">TelegramDialog</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <p class="desc">کتابخانه ساخت دیالوگ‌های سبک تلگرامی در اندروید با تنظیمات انعطاف‌پذیر</p>
+        <img class="shot" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='480'%20height='300'%20viewBox='0%200%20480%20300'%3E%3Crect%20width='480'%20height='300'%20fill='%23F7EDEB'/%3E%3Cg%20fill='none'%20stroke='%23BC7773'%20stroke-width='10'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='150'%20y='80'%20width='180'%20height='140'%20rx='14'/%3E%3Ccircle%20cx='200'%20cy='126'%20r='12'%20fill='%23BC7773'%20stroke='none'/%3E%3Cpath%20d='M160%20206l44-44%2030%2030%2036-42%2050%2056'/%3E%3C/g%3E%3C/svg%3E" alt="اسکرین‌شاتی برای TelegramDialog ثبت نشده" loading="lazy">
         <div class="meta">
           <span class="lang"><span class="sw"></span>Java</span>
-          <span class="stars">★ 4</span>
+          <span class="stars">★ 7</span>
         </div>
       </a>
     </div>
@@ -724,6 +803,64 @@
     setTimeout(function () {
       for (var j = 0; j < items.length; j++) items[j].classList.add('in');
     }, 2200);
+  })();
+
+  /* ---------- آمار زنده از گیت‌هاب ----------
+     اعداد داخل HTML فقط مقدار پیش‌فرض‌اند؛ اگر API در دسترس بود،
+     مخازن/دنبال‌کننده/دنبال‌شونده از پروفایل، ستاره‌ها مطابق چیپ
+     Stars پروفایل (مخازن ستاره‌خورده) و ستارهٔ هر پروژه از کارت
+     خودش، زنده به‌روز می‌شود. */
+  (function () {
+    if (!window.fetch) return;
+    var USER = 'AmirBahadorAmiri';
+
+    function set(id, v) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = v;
+    }
+
+    fetch('https://api.github.com/users/' + USER)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (u) {
+        if (!u) return;
+        set('stat-repos', u.public_repos);
+        set('stat-followers', u.followers);
+        set('stat-following', u.following);
+      })
+      .catch(function () {});
+
+    /* ستاره‌ها: شمردن همهٔ مخازن ستاره‌خورده، با عبور از صفحات */
+    function fetchAllStarred(page, acc) {
+      return fetch('https://api.github.com/users/' + USER + '/starred?per_page=100&page=' + page)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (list) {
+          if (!list) return acc;
+          acc += list.length;
+          return list.length === 100 ? fetchAllStarred(page + 1, acc) : acc;
+        });
+    }
+    fetchAllStarred(1, 0)
+      .then(function (n) { if (n) set('stat-stars', n); })
+      .catch(function () {});
+
+    fetch('https://api.github.com/users/' + USER + '/repos?per_page=100')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (repos) {
+        if (!repos || !repos.length) return;
+
+        var cards = document.querySelectorAll('.pcard[data-repo]');
+        for (var c = 0; c < cards.length; c++) {
+          var name = cards[c].getAttribute('data-repo');
+          for (var i = 0; i < repos.length; i++) {
+            if (repos[i].name === name) {
+              var el = cards[c].querySelector('.stars');
+              if (el) el.textContent = '★ ' + (repos[i].stargazers_count || 0);
+              break;
+            }
+          }
+        }
+      })
+      .catch(function () {});
   })();
 
   /* ---------- اسکرول نرم ---------- */
