@@ -997,9 +997,10 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
     if (reduce && reduce.matches) return;   /* احترام به تنظیم کاربر */
 
-    var EASE = 0.1;            /* کمتر = کندتر و نرم‌تر */
+    var EASE = 0.1;            /* کمتر = کندتر و نرم‌تر (دسکتاپ) */
     var root = document.documentElement;
     var cur = 0, tgt = 0, running = false, tv = 0, glideId = 0;
+    var ease = EASE;           /* ضریب جاری؛ لمس سریع‌تر از ماوس دنبال می‌کند */
 
     function maxScroll() { return Math.max(0, root.scrollHeight - window.innerHeight); }
     function clamp(v) { return v < 0 ? 0 : (v > maxScroll() ? maxScroll() : v); }
@@ -1012,7 +1013,7 @@
         running = false;
         return;
       }
-      cur += d * EASE;
+      cur += d * ease;
       window.scrollTo(0, cur);
       requestAnimationFrame(tick);
     }
@@ -1035,6 +1036,7 @@
     addEventListener('wheel', function (e) {
       if (e.ctrlKey) return;          /* Ctrl+چرخ = زوم مرورگر، دست‌نخورده */
       e.preventDefault();
+      ease = EASE;
       glideId++;
       var d = e.deltaY;
       if (e.deltaMode === 1) d *= 16;
@@ -1047,6 +1049,7 @@
 
     addEventListener('touchstart', function (e) {
       glideId++;
+      ease = 0.28;              /* دنبال‌کردن سریع انگشت = کشش کمتر و اسکرول سریع‌تر */
       jump(window.scrollY);
       lastY = e.touches[0].clientY;
     }, { passive: true });
@@ -1060,13 +1063,13 @@
     }, { passive: false });
 
     addEventListener('touchend', function () {
-      /* ادامه با سرعت کهشونده تا حس اینرسی گوشی حفظ شود */
+      /* ادامه با سرعت کاهنده؛ ضریب میراییِ بالاتر = توقف زودتر = اینرسی کمتر */
       var id = ++glideId;
       var v = tv;
       (function glide() {
         if (id !== glideId) return;
-        v *= 0.92;
-        if (Math.abs(v) < 0.6) return;
+        v *= 0.86;
+        if (Math.abs(v) < 1.4) return;
         go(tgt + v);
         requestAnimationFrame(glide);
       })();
@@ -1078,6 +1081,7 @@
       var tag = t && t.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
+      ease = EASE;
 
       var h = window.innerHeight, dest = null;
       switch (e.key) {
@@ -1110,6 +1114,7 @@
       var el = document.getElementById(href.slice(1));
       if (!el) return;
       e.preventDefault();
+      ease = EASE;
       glideId++;
       go(el.getBoundingClientRect().top + window.scrollY - anchorOffset());
     });
