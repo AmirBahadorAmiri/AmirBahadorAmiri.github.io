@@ -3,115 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark light">
+<meta name="color-scheme" content="light">
+<meta name="description" content="وب‌سایت شخصی امیر بهادر امیری — توسعه‌دهنده اندروید">
 <title>امیر بهادر امیری — توسعه‌دهنده اندروید</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
-  /* تم را قبل از رندر تنظیم کن تا فلش اولیه نداشته باشیم */
-  (function () {
-    try {
-      var saved = localStorage.getItem('theme');
-      if (saved === 'light' || saved === 'dark') {
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-      document.documentElement.classList.add('js');
-    } catch (e) {}
-  })();
+  /* نشان‌گذاری فعال‌بودن JS برای انیمیشن‌های پیش‌رونده */
+  document.documentElement.classList.add('js');
 </script>
 <style>
   /* ============================================================
-     THEME TOKENS
+     TOKENS — تک‌تم روشن و رسمی
+     پالت: آبی #1956B1 + موف #CEC4CE
      ============================================================ */
   :root {
-    --base:        #EEF1F8;
-    --base-2:      #E4E9F5;
-    --text:        #13161D;
-    --text-2:      #454D61;
-    --muted:       #4E566A;
-    --accent:      #6D3BE0;
-    --accent-2:    #C2570F;
-    --accent-soft: rgba(109, 59, 224, 0.14);
+    --blue:        #1956B1;
+    --blue-dark:   #123F82;
+    --blue-soft:   #E9EFF9;
 
-    /* glass */
-    --glass:        rgba(255, 255, 255, 0.55);
-    --glass-2:      rgba(255, 255, 255, 0.38);
-    --glass-brd:    rgba(255, 255, 255, 0.80);
-    --glass-hi:     rgba(255, 255, 255, 0.95);
-    --glass-shadow: 0 8px 32px rgba(28, 38, 66, 0.10);
-    --chip:         rgba(255, 255, 255, 0.62);
-    --chip-brd:     rgba(255, 255, 255, 0.85);
-    --hair:         rgba(19, 22, 29, 0.10);
-    --grain-op:     0.05;
-    --blob-op:      0.72;
-    --blob-1:       #C4B5FD;
-    --blob-2:       #FDBA74;
-    --blob-3:       #67E8F9;
-    --blob-4:       #F9A8D4;
-    --blob-5:       #6EE7B7;
-    --ring:         rgba(109, 59, 224, 0.55);
-    --shadow-card:  0 18px 40px -24px rgba(28, 38, 66, 0.55);
-  }
+    --mauve:       #CEC4CE;
+    --mauve-soft:  #F3F0F3;
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --base:        #0F1118;
-      --base-2:      #06070C;
-      --text:        #EFEFF2;
-      --text-2:      #C9CBD1;
-      --muted:       #A7A9B0;
-      --accent:      #A98BFF;
-      --accent-2:    #FF9A55;
-      --accent-soft: rgba(169, 139, 255, 0.16);
+    --bg:          #FAF9FA;
+    --surface:     #FFFFFF;
+    --ink:         #1A1E26;
+    --muted:       #5C6270;
+    --hair:        #E4DEE5;
 
-      --glass:        rgba(255, 255, 255, 0.065);
-      --glass-2:      rgba(255, 255, 255, 0.040);
-      --glass-brd:    rgba(255, 255, 255, 0.145);
-      --glass-hi:     rgba(255, 255, 255, 0.13);
-      --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.34);
-      --chip:         rgba(255, 255, 255, 0.070);
-      --chip-brd:     rgba(255, 255, 255, 0.150);
-      --hair:         rgba(255, 255, 255, 0.115);
-      --grain-op:     0.038;
-      --blob-op:      0.78;
-      --blob-1:       #8E6E9C;
-      --blob-2:       #F2803C;
-      --blob-3:       #5A9E82;
-      --blob-4:       #E8709B;
-      --blob-5:       #D2B455;
-      --ring:         rgba(169, 139, 255, 0.60);
-      --shadow-card:  0 20px 46px -26px rgba(0, 0, 0, 0.85);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --base:        #0F1118;
-    --base-2:      #06070C;
-    --text:        #EFEFF2;
-    --text-2:      #C9CBD1;
-    --muted:       #A7A9B0;
-    --accent:      #A98BFF;
-    --accent-2:    #FF9A55;
-    --accent-soft: rgba(169, 139, 255, 0.16);
-
-    --glass:        rgba(255, 255, 255, 0.065);
-    --glass-2:      rgba(255, 255, 255, 0.040);
-    --glass-brd:    rgba(255, 255, 255, 0.145);
-    --glass-hi:     rgba(255, 255, 255, 0.13);
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.34);
-    --chip:         rgba(255, 255, 255, 0.070);
-    --chip-brd:     rgba(255, 255, 255, 0.150);
-    --hair:         rgba(255, 255, 255, 0.115);
-    --grain-op:     0.038;
-    --blob-op:      0.78;
-    --blob-1:       #8E6E9C;
-    --blob-2:       #F2803C;
-    --blob-3:       #5A9E82;
-    --blob-4:       #E8709B;
-    --blob-5:       #D2B455;
-    --ring:         rgba(169, 139, 255, 0.60);
-    --shadow-card:  0 20px 46px -26px rgba(0, 0, 0, 0.85);
+    --shadow:      0 12px 30px -20px rgba(18, 63, 130, 0.35);
+    --radius:      14px;
   }
 
   /* ============================================================
@@ -120,13 +42,12 @@
   * { box-sizing: border-box; }
 
   html {
-    /* بزرگ‌نمایی کل صفحه — یک عدد، متن و فاصله‌ها و کارت‌ها را با هم بزرگ می‌کند.
-       برای کم‌وزوم‌کردن کافی است فقط همین عدد را عوض کنی. */
+    /* بزرگ‌نمایی کل صفحه — یک عدد، متن و فاصله‌ها و کارت‌ها را با هم بزرگ می‌کند */
     --zoom: 1.07;
     zoom: var(--zoom);
 
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
+    scroll-padding-top: 90px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -136,16 +57,15 @@
   body {
     margin: 0;
     min-height: 100vh;
-    color: var(--text);
+    background: var(--bg);
+    color: var(--ink);
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    position: relative;
-    isolation: isolate;
   }
 
-  ::selection { background: var(--accent); color: #fff; }
+  ::selection { background: var(--blue); color: #fff; }
 
   a { color: inherit; }
 
@@ -159,138 +79,39 @@
     max-width: 960px;
     margin: 0 auto;
     padding: 0 24px;
-    position: relative;
-    z-index: 1;
+  }
+
+  /* focus ring — global */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 10px;
   }
 
   /* ============================================================
-     BACKGROUND — blobs + grain + vignette
+     HEADER — نوار سفید چسبان، رسمی
      ============================================================ */
-  .bg {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    background:
-      radial-gradient(90% 58% at 14% 6%,  color-mix(in srgb, var(--blob-2) 24%, transparent), transparent 62%),
-      radial-gradient(85% 55% at 86% 94%, color-mix(in srgb, var(--blob-3) 22%, transparent), transparent 62%),
-      linear-gradient(170deg, var(--base) 0%, var(--base-2) 100%);
-    pointer-events: none;
+  .topline {
+    height: 4px;
+    background: var(--blue);
   }
 
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: var(--blob-op);
-    will-change: transform;
-    pointer-events: none;
-  }
-
-  .blob-1 {
-    width: 52vw; height: 52vw; min-width: 340px; min-height: 340px;
-    background: radial-gradient(circle at 30% 30%, var(--blob-1) 0%, color-mix(in srgb, var(--blob-1) 0%, transparent) 70%);
-    top: -14vh; inset-inline-start: -10vw;
-    animation: drift-a 34s ease-in-out infinite;
-  }
-  .blob-2 {
-    width: 44vw; height: 44vw; min-width: 300px; min-height: 300px;
-    background: radial-gradient(circle at 60% 40%, var(--blob-2) 0%, color-mix(in srgb, var(--blob-2) 0%, transparent) 70%);
-    top: 6vh; inset-inline-end: -12vw;
-    animation: drift-b 27s ease-in-out infinite;
-  }
-  .blob-3 {
-    width: 38vw; height: 38vw; min-width: 260px; min-height: 260px;
-    background: radial-gradient(circle at 45% 55%, var(--blob-3) 0%, color-mix(in srgb, var(--blob-3) 0%, transparent) 70%);
-    top: 62vh; inset-inline-start: 4vw;
-    animation: drift-c 39s ease-in-out infinite;
-  }
-  .blob-4 {
-    width: 34vw; height: 34vw; min-width: 240px; min-height: 240px;
-    background: radial-gradient(circle at 50% 50%, var(--blob-4) 0%, color-mix(in srgb, var(--blob-4) 0%, transparent) 70%);
-    top: 84vh; inset-inline-end: 4vw;
-    animation: drift-a 31s ease-in-out infinite reverse;
-  }
-  .blob-5 {
-    width: 30vw; height: 30vw; min-width: 220px; min-height: 220px;
-    background: radial-gradient(circle at 40% 60%, var(--blob-5) 0%, color-mix(in srgb, var(--blob-5) 0%, transparent) 70%);
-    top: 34vh; inset-inline-start: 26vw;
-    animation: drift-b 44s ease-in-out infinite;
-  }
-
-  @keyframes drift-a {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    33%      { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
-    66%      { transform: translate3d(-4vw, 7vh, 0) scale(0.94); }
-  }
-  @keyframes drift-b {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    40%      { transform: translate3d(-7vw, 6vh, 0) scale(1.16); }
-    70%      { transform: translate3d(3vw, -3vh, 0) scale(0.9); }
-  }
-  @keyframes drift-c {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    50%      { transform: translate3d(5vw, -6vh, 0) scale(1.2); }
-  }
-
-  /* grain */
-  .grain {
-    position: absolute;
-    inset: -50%;
-    opacity: var(--grain-op);
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
-    pointer-events: none;
-  }
-
-  /* vignette */
-  .bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(0,0,0,0.22) 100%);
-    pointer-events: none;
-  }
-  :root:not([data-theme="dark"]) .bg::after { background: radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(40,50,80,0.10) 100%); }
-
-  /* ============================================================
-     THE GLASS RECIPE
-     ============================================================ */
-  .glass {
-    position: relative;
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid var(--glass-brd);
-    border-radius: 20px;
-    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-hi);
-  }
-
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass { background: var(--base); }
-    :root[data-theme="dark"] .glass,
-    :root:not([data-theme="light"]) .glass { background: #15161C; }
-  }
-
-  /* ============================================================
-     NAV
-     ============================================================ */
   header.site {
     position: sticky;
-    top: 12px;
-    z-index: 30;
-    margin: 12px auto 0;
-    max-width: 1000px;
-    width: calc(100% - 32px);
+    top: 0;
+    z-index: 40;
+    background: var(--surface);
+    border-bottom: 1px solid var(--hair);
   }
 
   .nav {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 13px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 11px 14px 11px 18px;
-    border-radius: 16px;
-    transition: box-shadow .2s ease, background .2s ease;
   }
 
   .nav .brand {
@@ -299,13 +120,7 @@
     letter-spacing: .2px;
     white-space: nowrap;
   }
-  .nav .brand .mono { color: var(--accent); font-weight: 600; font-size: 13.5px; }
-
-  .nav .side {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .nav .brand .mono { color: var(--blue); font-weight: 600; font-size: 13.5px; }
 
   .nav .links { display: flex; gap: 4px; }
 
@@ -314,77 +129,46 @@
     font-size: 13.5px;
     font-weight: 500;
     color: var(--muted);
-    padding: 7px 13px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    transition: color .16s ease, background .16s ease, border-color .16s ease;
+    padding: 7px 14px;
+    border-radius: 9px;
+    transition: color .16s ease, background .16s ease;
   }
   .nav .links a:hover {
-    color: var(--text);
-    background: var(--glass-2);
-    border-color: var(--glass-brd);
-  }
-
-  .icon-btn {
-    display: inline-grid;
-    place-items: center;
-    width: 38px; height: 38px;
-    border-radius: 11px;
-    border: 1px solid var(--glass-brd);
-    background: var(--glass-2);
-    color: var(--text);
-    cursor: pointer;
-    flex: 0 0 auto;
-    transition: background .16s ease, transform .16s ease, border-color .16s ease;
-  }
-  .icon-btn:hover { background: var(--chip); transform: translateY(-1px); }
-  .icon-btn svg { width: 18px; height: 18px; }
-
-  /* آیکون بر اساس تمِ واقعیِ جاری (data-mode) توسط JS تنظیم می‌شود */
-  .icon-btn .i-sun  { display: none; }
-  .icon-btn .i-moon { display: block; }
-  .icon-btn[data-mode="light"] .i-sun  { display: block; }
-  .icon-btn[data-mode="light"] .i-moon { display: none; }
-
-  /* focus ring — global */
-  a:focus-visible, button:focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
-    border-radius: 10px;
+    color: var(--blue);
+    background: var(--blue-soft);
   }
 
   /* ============================================================
      HERO
      ============================================================ */
   .hero {
-    padding: 72px 0 52px;
-    max-width: 760px;
+    padding: 80px 0 52px;
+    max-width: 780px;
   }
 
   .hero .kicker {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: var(--accent-2);
+    gap: 9px;
+    color: var(--blue);
     font-size: 13.5px;
     font-weight: 700;
-    margin: 0 0 16px;
-    padding: 6px 14px;
+    margin: 0 0 18px;
+    padding: 6px 16px;
     border-radius: 999px;
-    background: var(--chip);
-    border: 1px solid var(--chip-brd);
+    background: var(--surface);
+    border: 1px solid var(--mauve);
   }
   .hero .kicker::before {
     content: '';
     width: 7px; height: 7px;
     border-radius: 50%;
-    background: var(--accent-2);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 22%, transparent);
+    background: var(--blue);
   }
 
   .hero h1 {
-    font-size: clamp(28px, 3.6vw, 39px);
-    line-height: 1.34;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.32;
     font-weight: 900;
     margin: 0 0 20px;
     letter-spacing: -0.3px;
@@ -392,10 +176,10 @@
   }
 
   .hero p.bio {
-    color: var(--text-2);
-    font-size: 16.5px;
-    max-width: 50ch;
-    margin: 0 0 28px;
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 58ch;
+    margin: 0 0 30px;
   }
 
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -404,64 +188,70 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 11px 20px;
-    border-radius: 12px;
+    padding: 11px 22px;
+    border-radius: 11px;
     font-size: 14.5px;
     font-weight: 600;
     text-decoration: none;
-    border: 1px solid var(--glass-brd);
-    background: var(--chip);
-    color: var(--text);
+    border: 1px solid var(--hair);
+    background: var(--surface);
+    color: var(--ink);
     cursor: pointer;
-    transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+    transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
   }
-  .btn:hover { transform: translateY(-2px); background: var(--glass-hi); }
-  .btn:active { transform: translateY(0); }
+  .btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: var(--blue-soft);
+  }
 
   .btn.primary {
-    background: var(--text);
-    color: var(--base);
-    border-color: var(--text);
-    box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--text) 70%, transparent);
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
   }
-  .btn.primary:hover { background: var(--text); filter: brightness(1.08); }
+  .btn.primary:hover {
+    background: var(--blue-dark);
+    border-color: var(--blue-dark);
+    color: #fff;
+  }
+  .btn:active { transform: translateY(1px); }
   .btn svg { width: 16px; height: 16px; }
 
   /* ============================================================
      STATS
      ============================================================ */
   .stats {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--surface);
+    border: 1px solid var(--hair);
+    border-radius: var(--radius);
     padding: 24px 8px;
-    border-radius: 20px;
   }
   .stats .stat {
-    flex: 1;
     text-align: center;
-    border-inline-start: 1px solid var(--hair);
     padding: 2px 8px;
+    border-inline-start: 1px solid var(--hair);
   }
   .stats .stat:first-child { border-inline-start: none; }
   .stats .stat .num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 27px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--text), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--blue);
   }
-  .stats .stat .lbl { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
+  .stats .stat .lbl { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 
   /* ============================================================
      SECTIONS
      ============================================================ */
-  section { padding: 60px 0; }
+  section { padding: 56px 0; }
 
   .sec-head { margin-bottom: 26px; }
   .sec-head h2 {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 800;
     margin: 0 0 8px;
     display: inline-flex;
@@ -472,13 +262,18 @@
     content: '';
     width: 5px; height: 26px;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    background: var(--blue);
   }
   .sec-head p { color: var(--muted); margin: 0; font-size: 14.5px; }
 
   /* ---------- ABOUT ---------- */
-  .about-panel { padding: 32px 34px; border-radius: 22px; }
-  .about-panel > p { color: var(--text-2); font-size: 15.5px; margin: 0; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--hair);
+    border-radius: var(--radius);
+  }
+  .about-panel { padding: 32px 34px; }
+  .about-panel > p { color: var(--ink); font-size: 15.5px; margin: 0; }
 
   .skills-list {
     list-style: none;
@@ -499,7 +294,7 @@
   .skills-list .grp {
     font-weight: 700;
     font-size: 13px;
-    color: var(--accent);
+    color: var(--blue);
   }
   .skills-list .chips {
     display: flex;
@@ -510,17 +305,17 @@
   .skills-list .chips span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    padding: 5px 11px;
+    padding: 5px 12px;
     border-radius: 8px;
-    background: var(--chip);
-    border: 1px solid var(--chip-brd);
-    color: var(--text-2);
-    transition: background .16s ease, color .16s ease, transform .16s ease;
+    background: var(--mauve-soft);
+    border: 1px solid var(--mauve);
+    color: #3A3340;
+    transition: border-color .16s ease, color .16s ease, background .16s ease;
   }
   .skills-list .chips span:hover {
-    background: var(--accent-soft);
-    color: var(--text);
-    transform: translateY(-1px);
+    background: var(--blue-soft);
+    border-color: var(--blue);
+    color: var(--blue);
   }
 
   /* ---------- PROJECTS ---------- */
@@ -532,15 +327,18 @@
   }
 
   .pcard {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 22px 22px 20px;
-    border-radius: 18px;
+    padding: 22px 24px 20px;
+    background: var(--surface);
+    border: 1px solid var(--hair);
+    border-radius: var(--radius);
     text-decoration: none;
-    color: var(--text);
+    color: var(--ink);
     overflow: hidden;
-    transition: transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, background .22s ease, border-color .22s ease;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
   .pcard::before {
     content: '';
@@ -549,28 +347,15 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: var(--pc, var(--accent));
-    opacity: .55;
-    transition: opacity .22s ease, width .22s ease;
-  }
-  .pcard::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--pc-soft, transparent), transparent 62%);
-    opacity: 0;
-    transition: opacity .28s ease;
-    pointer-events: none;
+    background: var(--mauve);
+    transition: background .2s ease;
   }
   .pcard:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card), inset 0 1px 0 var(--glass-hi);
-    border-color: var(--glass-hi);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--blue);
   }
-  .pcard:hover::before { opacity: 1; width: 4px; }
-  .pcard:hover::after { opacity: .10; }
-  .pcard > * { position: relative; z-index: 1; }
+  .pcard:hover::before { background: var(--blue); }
 
   .pcard .top {
     display: flex;
@@ -588,12 +373,11 @@
     display: grid;
     place-items: center;
     width: 34px; height: 34px;
-    border-radius: 10px;
-    background: var(--accent-soft);
+    border-radius: 9px;
+    background: var(--blue-soft);
     flex: 0 0 auto;
-    transition: background .22s ease;
   }
-  .pcard .icon svg { width: 17px; height: 17px; stroke: var(--accent); }
+  .pcard .icon svg { width: 17px; height: 17px; stroke: var(--blue); }
 
   .pcard .desc {
     color: var(--muted);
@@ -614,7 +398,7 @@
   .pcard .lang {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11.5px;
-    color: var(--text-2);
+    color: var(--muted);
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -622,8 +406,7 @@
   .pcard .lang .sw {
     width: 9px; height: 9px;
     border-radius: 50%;
-    background: var(--pc);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pc) 20%, transparent);
+    background: var(--pc, var(--blue));
   }
   .pcard .stars {
     font-family: 'JetBrains Mono', monospace;
@@ -631,27 +414,52 @@
     color: var(--muted);
   }
 
-  /* language accents */
-  .lang-kotlin { --pc: #7F52FF; --pc-soft: rgba(127, 82, 255, .55); }
-  .lang-java   { --pc: #B07219; --pc-soft: rgba(176, 114, 25, .55); }
-  .lang-php    { --pc: #777BB4; --pc-soft: rgba(119, 123, 180, .55); }
-  .lang-js     { --pc: #F7DF1E; --pc-soft: rgba(247, 223, 30, .55); }
+  /* رنگ استاندارد هر زبان — فقط نقطهٔ ۹ پیکسلی */
+  .lang-kotlin { --pc: #7F52FF; }
+  .lang-java   { --pc: #B07219; }
+  .lang-php    { --pc: #777BB4; }
+  .lang-js     { --pc: #E8C60E; }
 
   /* ---------- CONTACT ---------- */
   .contact {
-    padding: 44px 36px;
-    border-radius: 24px;
+    background: var(--blue);
+    border-radius: 16px;
+    padding: 46px 36px;
     text-align: center;
+    color: #fff;
   }
   .contact h2 { font-size: 25px; font-weight: 800; margin: 0 0 10px; }
-  .contact p { color: var(--muted); margin: 0 0 26px; }
+  .contact p { color: rgba(255, 255, 255, 0.82); margin: 0 0 28px; }
   .contact .cta-row { justify-content: center; }
 
+  .btn.inverse {
+    background: #fff;
+    border-color: #fff;
+    color: var(--blue);
+  }
+  .btn.inverse:hover {
+    background: var(--blue-soft);
+    border-color: var(--blue-soft);
+    color: var(--blue-dark);
+  }
+  .btn.ghost {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
+  }
+  .btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+    color: #fff;
+  }
+
   footer {
-    padding: 36px 0 64px;
+    padding: 36px 0 60px;
     text-align: center;
     color: var(--muted);
     font-size: 13px;
+    border-top: 1px solid var(--hair);
+    margin-top: 24px;
   }
   footer .mono { opacity: .8; }
 
@@ -660,8 +468,8 @@
      ============================================================ */
   html.js .reveal {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    transform: translateY(14px);
+    transition: opacity .6s ease, transform .6s ease;
   }
   html.js .reveal.in { opacity: 1; transform: none; }
 
@@ -669,26 +477,23 @@
      RESPONSIVE
      ============================================================ */
   @media (max-width: 860px) {
-    .hero { padding-top: 48px; }
+    .hero { padding-top: 56px; }
   }
 
   @media (max-width: 720px) {
     .wrap { padding: 0 16px; }
-    header.site { top: 8px; margin-top: 8px; width: calc(100% - 20px); }
-    .nav { flex-wrap: wrap; padding: 10px 12px; }
+    .nav { padding: 11px 16px; flex-wrap: wrap; }
     .nav .links { order: 3; width: 100%; justify-content: space-between; gap: 0; }
     .nav .links a { flex: 1; text-align: center; padding: 7px 4px; font-size: 13px; }
     .nav .brand { font-size: 14.5px; }
 
-    .stats { flex-wrap: wrap; padding: 20px 6px; }
-    .stats .stat { flex: 1 1 50%; border-inline-start: none; padding: 12px 6px; }
-    .stats .stat:nth-child(odd) { border-inline-end: 1px solid var(--hair); }
-    .stats .stat .num { font-size: 23px; }
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 16px 0; padding: 20px 6px; }
+    .stats .stat { border-inline-start: none; padding: 6px 6px; }
+    .stats .stat .num { font-size: 24px; }
 
     .about-panel { padding: 24px 20px; }
     .skills-list li { grid-template-columns: 1fr; gap: 8px; }
-    .contact { padding: 34px 20px; }
-    .blob { filter: blur(70px); }
+    .contact { padding: 36px 20px; }
   }
 
   /* ============================================================
@@ -696,42 +501,22 @@
      ============================================================ */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .blob { animation: none !important; }
     html.js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .btn:hover, .pcard:hover, .icon-btn:hover { transform: none; }
+    .btn:hover, .pcard:hover { transform: none; }
     * { transition-duration: .01ms !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg" aria-hidden="true">
-  <span class="blob blob-1"></span>
-  <span class="blob blob-2"></span>
-  <span class="blob blob-3"></span>
-  <span class="blob blob-4"></span>
-  <span class="blob blob-5"></span>
-  <span class="grain"></span>
-</div>
-
 <header class="site">
-  <nav class="nav glass" aria-label="ناوبری اصلی">
+  <div class="topline" aria-hidden="true"></div>
+  <nav class="nav" aria-label="ناوبری اصلی">
     <div class="brand">امیر بهادر امیری <span class="mono">/ dev</span></div>
-    <div class="side">
-      <div class="links">
-        <a href="#projects">پروژه‌ها</a>
-        <a href="#about">درباره من</a>
-        <a href="#contact">تماس</a>
-      </div>
-      <button class="icon-btn" id="themeBtn" type="button" aria-label="تغییر تم روشن و تیره" title="تغییر تم">
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
-        </svg>
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4.2"/>
-          <path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
-        </svg>
-      </button>
+    <div class="links">
+      <a href="#projects">پروژه‌ها</a>
+      <a href="#about">درباره من</a>
+      <a href="#contact">تماس</a>
     </div>
   </nav>
 </header>
@@ -756,7 +541,7 @@
     </div>
   </section>
 
-  <div class="stats glass reveal">
+  <div class="stats reveal">
     <div class="stat"><div class="num">48</div><div class="lbl">مخزن عمومی</div></div>
     <div class="stat"><div class="num">118</div><div class="lbl">ستاره</div></div>
     <div class="stat"><div class="num">126</div><div class="lbl">دنبال‌کننده</div></div>
@@ -768,7 +553,7 @@
       <h2>درباره من</h2>
       <p>خلاصه‌ای از حوزه کاری و ابزارهایی که باهاشون کار می‌کنم.</p>
     </div>
-    <div class="about-panel glass reveal">
+    <div class="about-panel panel reveal">
       <p>تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML و CSS آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.</p>
       <ul class="skills-list">
         <li>
@@ -806,7 +591,7 @@
     </div>
 
     <div class="cards">
-      <a class="pcard glass reveal lang-kotlin" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-kotlin" href="https://github.com/AmirBahadorAmiri/KalaYar" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">KalaYar</span>
           <span class="icon">
@@ -820,7 +605,7 @@
         </div>
       </a>
 
-      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/TelegramDialog" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">TelegramDialog</span>
           <span class="icon">
@@ -834,7 +619,7 @@
         </div>
       </a>
 
-      <a class="pcard glass reveal lang-php" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-php" href="https://github.com/AmirBahadorAmiri/LogStream" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">LogStream</span>
           <span class="icon">
@@ -848,7 +633,7 @@
         </div>
       </a>
 
-      <a class="pcard glass reveal lang-js" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-js" href="https://github.com/AmirBahadorAmiri/GPTelegramBot" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">GPTelegramBot</span>
           <span class="icon">
@@ -862,7 +647,7 @@
         </div>
       </a>
 
-      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/DEFINEit" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">DEFINEit</span>
           <span class="icon">
@@ -876,7 +661,7 @@
         </div>
       </a>
 
-      <a class="pcard glass reveal lang-java" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
+      <a class="pcard reveal lang-java" href="https://github.com/AmirBahadorAmiri/AppleNote" target="_blank" rel="noopener">
         <div class="top">
           <span class="name">AppleNote</span>
           <span class="icon">
@@ -893,14 +678,14 @@
   </section>
 
   <section id="contact">
-    <div class="contact glass reveal">
+    <div class="contact reveal">
       <h2>بیایید در ارتباط باشیم</h2>
       <p>برای همکاری، سوال درباره پروژه‌ها یا فقط یک سلام ساده.</p>
       <div class="cta-row">
-        <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">گیت‌هاب</a>
-        <a class="btn" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">تلگرام</a>
-        <a class="btn" href="mailto:bahadoramiri.report@gmail.com">ایمیل</a>
-        <a class="btn" href="https://AmirBahadorAmiri.github.io" target="_blank" rel="noopener">وب‌سایت</a>
+        <a class="btn inverse" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">گیت‌هاب</a>
+        <a class="btn ghost" href="https://t.me/AmirBahadorAmiri" target="_blank" rel="noopener">تلگرام</a>
+        <a class="btn ghost" href="mailto:bahadoramiri.report@gmail.com">ایمیل</a>
+        <a class="btn ghost" href="https://AmirBahadorAmiri.github.io" target="_blank" rel="noopener">وب‌سایت</a>
       </div>
     </div>
   </section>
@@ -914,45 +699,6 @@
 </main>
 
 <script>
-  /* ---------- theme toggle ---------- */
-  (function () {
-    var btn = document.getElementById('themeBtn');
-    if (!btn) return;
-
-    function systemIsDark() {
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    function currentIsDark() {
-      var attr = document.documentElement.getAttribute('data-theme');
-      if (attr === 'dark') return true;
-      if (attr === 'light') return false;
-      return systemIsDark();
-    }
-
-    function sync() {
-      btn.setAttribute('data-mode', currentIsDark() ? 'dark' : 'light');
-    }
-
-    sync();
-
-    btn.addEventListener('click', function () {
-      var next = currentIsDark() ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      sync();
-    });
-
-    /* اگر تم دستی انتخاب نشده، با تغییر تم سیستم آیکون هم هماهنگ شود */
-    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-    if (mq) {
-      var onChange = function () {
-        if (!document.documentElement.getAttribute('data-theme')) sync();
-      };
-      if (mq.addEventListener) mq.addEventListener('change', onChange);
-      else if (mq.addListener) mq.addListener(onChange);
-    }
-  })();
-
   /* ---------- scroll reveal ---------- */
   (function () {
     var items = document.querySelectorAll('.reveal');
@@ -961,6 +707,8 @@
       return;
     }
 
+    /* ۲۶۰px قبل از ورود به دید فعال شود، نه داخل دید؛ در اسکرول سریع
+       کاربر نباید عنصرِ محو را ببیند که «تازه لود می‌شود» */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
@@ -968,7 +716,7 @@
           io.unobserve(e.target);
         }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    }, { rootMargin: '0px 0px 260px 0px', threshold: 0 });
 
     for (var i = 0; i < items.length; i++) io.observe(items[i]);
 
@@ -976,20 +724,6 @@
     setTimeout(function () {
       for (var j = 0; j < items.length; j++) items[j].classList.add('in');
     }, 2200);
-  })();
-
-  /* ---------- pointer glow روی کارت پروژه‌ها ---------- */
-  (function () {
-    var cards = document.querySelectorAll('.pcard');
-    for (var i = 0; i < cards.length; i++) {
-      (function (card) {
-        card.addEventListener('pointermove', function (e) {
-          var r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-        });
-      })(cards[i]);
-    }
   })();
 
   /* ---------- اسکرول نرم ---------- */
@@ -1044,7 +778,7 @@
       go(tgt + d);
     }, { passive: false });
 
-    /* ---------- لمسی با اینرسی ---------- */
+    /* ---------- لمسی ---------- */
     var lastY = 0;
 
     addEventListener('touchstart', function (e) {
