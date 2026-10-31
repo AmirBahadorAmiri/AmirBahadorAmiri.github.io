@@ -1049,7 +1049,7 @@
 
     addEventListener('touchstart', function (e) {
       glideId++;
-      ease = 0.28;              /* دنبال‌کردن سریع انگشت = کشش کمتر و اسکرول سریع‌تر */
+      ease = 0.38;              /* دنبال‌کردن سریع و روان انگشت = کشش کمتر */
       jump(window.scrollY);
       lastY = e.touches[0].clientY;
     }, { passive: true });
@@ -1057,7 +1057,7 @@
     addEventListener('touchmove', function (e) {
       e.preventDefault();
       var y = e.touches[0].clientY;
-      tv = lastY - y;
+      tv = (lastY - y) * 1.2;   /* حساسیت لمس: با همان کشیدن، مسیر بیشتری طی می‌شود */
       go(tgt + tv);
       lastY = y;
     }, { passive: false });
@@ -1069,7 +1069,7 @@
       (function glide() {
         if (id !== glideId) return;
         v *= 0.86;
-        if (Math.abs(v) < 1.4) return;
+        if (Math.abs(v) < 0.9) return;
         go(tgt + v);
         requestAnimationFrame(glide);
       })();
