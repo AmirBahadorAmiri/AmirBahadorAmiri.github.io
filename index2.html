@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امیر بهادر امیری — توسعه‌دهنده اندروید</title>
+<style>
+  /* ============ design tokens ============ */
+  :root {
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --ink: #17171a;
+    --muted: #66666f;
+    --line: #e8e5de;
+    --line-strong: #d6d1c7;
+    --accent: #b1332c;
+    --chip: #f0ede7;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Tahoma, "Vazirmatn", sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { background: var(--bg); }
+
+  body {
+    margin: 0 auto;
+    max-width: 64rem;
+    padding: clamp(1.1rem, 3vw, 2.4rem) clamp(1rem, 3vw, 1.6rem) 3.5rem;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.85;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  ::selection { background: #f2d9d6; }
+
+  /* ============ masthead ============ */
+  .masthead { padding-block: .35rem 1.3rem; }
+
+  .masthead h1 {
+    margin: 0 0 .35rem;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.015em;
+  }
+
+  .tagline { margin: 0 0 1.2rem; color: var(--muted); font-size: 1.02rem; }
+
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .45rem 1.25rem;
+    padding-block-start: .85rem;
+    border-block-start: 1px solid var(--line-strong);
+  }
+
+  .sep { opacity: .4; margin: 0 .1rem; }
+
+  /* ============ links & language switch ============ */
+  a,
+  .lang-switch button {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .88rem;
+    line-height: 1.6;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: .1rem .4rem;
+    border-radius: .4rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease;
+  }
+
+  a:hover,
+  .lang-switch button:hover {
+    background: var(--chip);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  a:focus-visible,
+  .lang-switch button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .lang-switch {
+    direction: ltr;
+    font-family: var(--mono);
+    font-size: .88rem;
+    white-space: nowrap;
+  }
+  .lang-switch button[aria-pressed="true"] { background: var(--chip); font-weight: 700; }
+
+  /* ============ cards ============ */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(1.1rem, 2.3vw, 1.7rem);
+    margin-block-end: clamp(.85rem, 1.7vw, 1.2rem);
+    box-shadow: 0 1px 2px rgba(23, 23, 26, .04);
+  }
+
+  .card h2 {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin: 0 0 .85rem;
+    font-size: 1.1rem;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  .card h2::before {
+    content: "";
+    flex: none;
+    inline-size: .3rem;
+    block-size: 1.05rem;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  .card p { margin: 0 0 .8rem; }
+  .card p:last-child { margin-block-end: 0; }
+  .card h2 + p { color: var(--muted); }
+
+  /* the intro card now holds only the two call-to-action links */
+  #intro { text-align: center; }
+
+  section[id] { scroll-margin-block-start: 1rem; }
+
+  /* ============ tables ============ */
+  .table-wrap {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+  .table-wrap::-webkit-scrollbar { height: 8px; }
+  .table-wrap::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 999px;
+  }
+
+  table {
+    inline-size: 100%;
+    border: 0;
+    border-collapse: collapse;
+    font-size: .94rem;
+  }
+
+  th, td {
+    border: 0;
+    border-block-end: 1px solid var(--line);
+    padding: .58rem .55rem;
+    text-align: start;
+    vertical-align: top;
+  }
+
+  tr:first-child th {
+    color: var(--muted);
+    font-size: .74rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-block-end: 1px solid var(--line-strong);
+  }
+
+  tr:last-child td { border-block-end: 0; }
+  tr:hover td { background: #fbfaf7; }
+  td b { font-weight: 600; }
+
+  th[align="center"], td[align="center"] { text-align: center; }
+  th[align="right"], td[align="right"] { text-align: start; }
+
+  /* stats: a metric strip */
+  #stats table { table-layout: fixed; }
+  #stats th, #stats td { text-align: center; }
+  #stats th { white-space: normal; }
+  #stats tr:last-child td {
+    font-size: 1.35rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    padding-block: .9rem;
+  }
+
+  /* about + projects tables */
+  #about th:first-child, #about td:first-child { inline-size: 9.5rem; white-space: nowrap; }
+  /* on small screens keep the columns readable and let the wrapper scroll */
+  #projects table { min-inline-size: 38rem; }
+  #projects tr:first-child th:nth-child(3),
+  #projects tr:first-child th:nth-child(4),
+  #projects tr:first-child th:nth-child(5) { text-align: center; }
+  #projects td:nth-child(3),
+  #projects td:nth-child(4),
+  #projects td:nth-child(5) { text-align: center; white-space: nowrap; }
+  #projects td:nth-child(4) { font-variant-numeric: tabular-nums; }
+
+  /* ============ footer ============ */
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .35rem 1rem;
+    margin-block-start: 2rem;
+    padding-block-start: 1.1rem;
+    border-block-start: 1px solid var(--line-strong);
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.7;
+    text-align: center;
+  }
+  .colophon p { margin: 0; }
+
+  @media (max-width: 34rem) {
+    body { line-height: 1.75; }
+    .card { border-radius: 12px; padding: 1rem .85rem; }
+    th, td { padding: .5rem .4rem; }
+    tr:first-child th { white-space: normal; }
+    #stats tr:last-child td { font-size: 1.1rem; }
+    #about th:first-child, #about td:first-child { inline-size: auto; white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+<h1 data-i18n="h1">امیر بهادر امیری</h1>
+<p class="tagline" data-i18n="role.title">توسعه‌دهنده اندروید</p>
+
+<div class="topbar">
+  <nav>
+    <a href="#projects" data-i18n="nav.projects">پروژه‌ها</a><span class="sep">|</span>
+    <a href="#about" data-i18n="nav.about">درباره من</a><span class="sep">|</span>
+    <a href="#contact" data-i18n="nav.contact">تماس</a><span class="sep">|</span>
+    <a href="index.html" data-i18n="nav.other">نسخهٔ اصلی</a>
+  </nav>
+
+  <div class="lang-switch" role="group" aria-label="Language / زبان">
+    <button type="button" lang="en" data-set-lang="en" aria-pressed="false">EN</button><span class="sep">-</span><button type="button" lang="fa" data-set-lang="fa" aria-pressed="true">FA</button>
+  </div>
+</div>
+</header>
+
+<main>
+
+<section class="card" id="intro">
+<p>
+  <a href="https://github.com/AmirBahadorAmiri" data-i18n="role.github">مشاهده گیت‌هاب</a><span class="sep">|</span>
+  <a href="https://t.me/AmirBahadorAmiri" data-i18n="role.telegram">گفتگو در تلگرام</a>
+</p>
+</section>
+
+<section class="card" id="stats">
+<h2 data-i18n="stats.title">آمار</h2>
+<div class="table-wrap">
+<table>
+<tr>
+<th data-i18n="stats.repos">مخزن عمومی</th>
+<th data-i18n="stats.stars">ستاره</th>
+<th data-i18n="stats.followers">دنبال‌کننده</th>
+<th data-i18n="stats.following">دنبال‌شونده</th>
+</tr>
+<tr>
+<td align="center">50</td>
+<td align="center">124</td>
+<td align="center">125</td>
+<td align="center">87</td>
+</tr>
+</table>
+</div>
+</section>
+
+<section class="card" id="about">
+<h2><span data-i18n="about.title">درباره من</span></h2>
+<p data-i18n="about.lead">خلاصه‌ای از حوزه کاری و ابزارهایی که باهاشون کار می‌کنم.</p>
+<p data-i18n="about.body">تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML و CSS آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.</p>
+<div class="table-wrap">
+<table>
+<tr>
+<th align="right" data-i18n="about.group">گروه</th>
+<th align="right" data-i18n="about.tools">ابزارها</th>
+</tr>
+<tr>
+<td><b data-i18n="about.os">سیستم‌عامل</b></td>
+<td data-i18n="about.osValue">Windows، Linux</td>
+</tr>
+<tr>
+<td><b data-i18n="about.langs">زبان‌ها</b></td>
+<td data-i18n="about.langsValue">Kotlin، Java، Android، PHP، HTML، CSS</td>
+</tr>
+<tr>
+<td><b data-i18n="about.editors">ابزار کدنویسی</b></td>
+<td data-i18n="about.editorsValue">Android Studio، PhpStorm، VS Code</td>
+</tr>
+<tr>
+<td><b data-i18n="about.git">گیت</b></td>
+<td data-i18n="about.gitValue">Git، GitHub، GitHub Desktop، GitKraken، SmartGit، GitForce، Sourcetree، TortoiseGit، Fork، Tower</td>
+</tr>
+<tr>
+<td><b data-i18n="about.api">تست API</b></td>
+<td data-i18n="about.apiValue">Postman، Bruno، Yaak، HTTPie</td>
+</tr>
+<tr>
+<td><b data-i18n="about.design">دیزاین</b></td>
+<td data-i18n="about.designValue">Adobe XD</td>
+</tr>
+</table>
+</div>
+</section>
+
+<section class="card" id="projects">
+<h2><span data-i18n="projects.title">پروژه‌های منتخب</span></h2>
+<div class="table-wrap">
+<table>
+<tr>
+<th align="right" data-i18n="proj.col.project">پروژه</th>
+<th align="right" data-i18n="proj.col.desc">توضیح</th>
+<th data-i18n="proj.col.lang">زبان</th>
+<th data-i18n="proj.col.stars">ستاره</th>
+<th data-i18n="proj.col.link">لینک</th>
+</tr>
+<tr>
+<td><b>Rangban</b></td>
+<td data-i18n="proj.rangban">ساخت، سازمان‌دهی و خروجی گرفتن از پالت‌های رنگی با رابط فارسی</td>
+<td align="center">PHP</td>
+<td align="center">❤️ 0</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/Rangban" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>Timo</b></td>
+<td data-i18n="proj.timo">مدیریت وظایف ویژهٔ توسعه‌دهنده‌ها با ساختار اپلیکیشن، پوشه و تسک، به‌همراه تایمر پومودورو و رابط دوزبانه</td>
+<td align="center">PHP</td>
+<td align="center">❤️ 0</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/Timo" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>CodePoint</b></td>
+<td data-i18n="proj.codepoint">مدیریت اسنیپت‌های کد با رابط راست‌به‌چپ و تم روشن و تیره</td>
+<td align="center">PHP</td>
+<td align="center">❤️ 0</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/CodePoint" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>AppleNote</b></td>
+<td data-i18n="proj.applenote">نمونه‌ای از بهترین شیوه‌ها برای معماری MVP در اندروید</td>
+<td align="center">Java</td>
+<td align="center">❤️ 4</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/AppleNote" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>QuickMail</b></td>
+<td data-i18n="proj.quickmail">پوشهٔ سبک اندرویدی روی JavaMail برای ارسال ایمیل SMTP با API روان و تک‌خطی</td>
+<td align="center">Java</td>
+<td align="center">❤️ 0</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/QuickMail" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>Snake1997</b></td>
+<td data-i18n="proj.snake">بازی مار به سبک نوکیا 3310 با HTML، CSS و JavaScript خالص</td>
+<td align="center">JavaScript</td>
+<td align="center">❤️ 0</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/Snake1997" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>DEFINEit</b></td>
+<td data-i18n="proj.defineit">برنامه فرهنگ لغت و تعریف واژه‌ها</td>
+<td align="center">Java</td>
+<td align="center">❤️ 2</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/DEFINEit" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>KalaYar</b></td>
+<td data-i18n="proj.kalayar">نرم‌افزار ساده برای حسابداری فروشگاه‌ها</td>
+<td align="center">Kotlin</td>
+<td align="center">❤️ 4</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/KalaYar" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>CoffeShopMenu</b></td>
+<td data-i18n="proj.coffe">تابلوی قیمت زندهٔ کافه با پنل مدیریت و به‌روزرسانی خودکار هر ۳۰ ثانیه</td>
+<td align="center">PHP</td>
+<td align="center">❤️ 2</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/CoffeShopMenu" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+<tr>
+<td><b>TelegramDialog</b></td>
+<td data-i18n="proj.telegram">کتابخانه ساخت دیالوگ‌های سبک تلگرامی در اندروید با تنظیمات انعطاف‌پذیر</td>
+<td align="center">Java</td>
+<td align="center">❤️ 7</td>
+<td align="center"><a href="https://github.com/AmirBahadorAmiri/TelegramDialog" data-i18n="proj.github">گیت‌هاب</a></td>
+</tr>
+</table>
+</div>
+</section>
+
+<section class="card" id="contact">
+<h2><span data-i18n="contact.title">بیایید در ارتباط باشیم</span></h2>
+<p data-i18n="contact.lead">برای همکاری، سوال درباره پروژه‌ها یا فقط یک سلام ساده.</p>
+<p>
+  <a href="https://github.com/AmirBahadorAmiri" data-i18n="contact.github">گیت‌هاب</a><span class="sep">|</span>
+  <a href="https://t.me/AmirBahadorAmiri" data-i18n="contact.telegram">تلگرام</a><span class="sep">|</span>
+  <a href="mailto:bahadoramiri.report@gmail.com" data-i18n="contact.email">ایمیل</a><span class="sep">|</span>
+  <a href="https://AmirBahadorAmiri.github.io" data-i18n="contact.website">وب‌سایت</a>
+</p>
+</section>
+
+</main>
+
+<footer class="colophon">
+<p>© 2026 — Amir Bahador Amiri<br>Made with ❤️ by Amir</p>
+</footer>
+
+<script>
+(function () {
+  var I18N = {
+    fa: {
+      'doc.title': 'امیر بهادر امیری — توسعه‌دهنده اندروید',
+      'h1': 'امیر بهادر امیری',
+
+      'nav.projects': 'پروژه‌ها',
+      'nav.about': 'درباره من',
+      'nav.contact': 'تماس',
+      'nav.other': 'نسخهٔ اصلی',
+
+      'role.title': 'توسعه‌دهنده اندروید',
+      'role.github': 'مشاهده گیت‌هاب',
+      'role.telegram': 'گفتگو در تلگرام',
+
+      'stats.title': 'آمار',
+      'stats.repos': 'مخزن عمومی',
+      'stats.stars': 'ستاره',
+      'stats.followers': 'دنبال‌کننده',
+      'stats.following': 'دنبال‌شونده',
+
+      'about.title': 'درباره من',
+      'about.lead': 'خلاصه‌ای از حوزه کاری و ابزارهایی که باهاشون کار می‌کنم.',
+      'about.body': 'تمرکزم روی توسعه اندرویده: ساخت اپ با Kotlin و Java، کار روزمره با Android Studio و کنترل نسخه با Git و ابزارهایش. در کنارش بک‌اند و ابزارهای تحت وب را با PHP می‌سازم و با HTML و CSS آشنام. APIها را با Postman و ابزارهای مشابه تست می‌کنم، طراحی رابط کاربری را با Adobe XD انجام می‌دم و روی ویندوز و لینوکس راحتم. به کد تمیز و قابل تست اهمیت می‌دم و همیشه دنبال یادگیری ابزارهای جدیدم.',
+      'about.group': 'گروه',
+      'about.tools': 'ابزارها',
+      'about.os': 'سیستم‌عامل',
+      'about.osValue': 'Windows، Linux',
+      'about.langs': 'زبان‌ها',
+      'about.langsValue': 'Kotlin، Java، Android، PHP، HTML، CSS',
+      'about.editors': 'ابزار کدنویسی',
+      'about.editorsValue': 'Android Studio، PhpStorm، VS Code',
+      'about.git': 'گیت',
+      'about.gitValue': 'Git، GitHub، GitHub Desktop، GitKraken، SmartGit، GitForce، Sourcetree، TortoiseGit، Fork، Tower',
+      'about.api': 'تست API',
+      'about.apiValue': 'Postman، Bruno، Yaak، HTTPie',
+      'about.design': 'دیزاین',
+      'about.designValue': 'Adobe XD',
+
+      'projects.title': 'پروژه‌های منتخب',
+      'proj.col.project': 'پروژه',
+      'proj.col.desc': 'توضیح',
+      'proj.col.lang': 'زبان',
+      'proj.col.stars': 'ستاره',
+      'proj.col.link': 'لینک',
+      'proj.github': 'گیت‌هاب',
+      'proj.rangban': 'ساخت، سازمان‌دهی و خروجی گرفتن از پالت‌های رنگی با رابط فارسی',
+      'proj.timo': 'مدیریت وظایف ویژهٔ توسعه‌دهنده‌ها با ساختار اپلیکیشن، پوشه و تسک، به‌همراه تایمر پومودورو و رابط دوزبانه',
+      'proj.codepoint': 'مدیریت اسنیپت‌های کد با رابط راست‌به‌چپ و تم روشن و تیره',
+      'proj.applenote': 'نمونه‌ای از بهترین شیوه‌ها برای معماری MVP در اندروید',
+      'proj.quickmail': 'پوشهٔ سبک اندرویدی روی JavaMail برای ارسال ایمیل SMTP با API روان و تک‌خطی',
+      'proj.snake': 'بازی مار به سبک نوکیا 3310 با HTML، CSS و JavaScript خالص',
+      'proj.defineit': 'برنامه فرهنگ لغت و تعریف واژه‌ها',
+      'proj.kalayar': 'نرم‌افزار ساده برای حسابداری فروشگاه‌ها',
+      'proj.coffe': 'تابلوی قیمت زندهٔ کافه با پنل مدیریت و به‌روزرسانی خودکار هر ۳۰ ثانیه',
+      'proj.telegram': 'کتابخانه ساخت دیالوگ‌های سبک تلگرامی در اندروید با تنظیمات انعطاف‌پذیر',
+
+      'contact.title': 'بیایید در ارتباط باشیم',
+      'contact.lead': 'برای همکاری، سوال درباره پروژه‌ها یا فقط یک سلام ساده.',
+      'contact.github': 'گیت‌هاب',
+      'contact.telegram': 'تلگرام',
+      'contact.email': 'ایمیل',
+      'contact.website': 'وب‌سایت'
+    },
+
+    en: {
+      'doc.title': 'Amir Bahador Amiri — Android Developer',
+      'h1': 'Amir Bahador Amiri',
+
+      'nav.projects': 'Projects',
+      'nav.about': 'About',
+      'nav.contact': 'Contact',
+      'nav.other': 'Original version',
+
+      'role.title': 'Android Developer',
+      'role.github': 'View GitHub',
+      'role.telegram': 'Chat on Telegram',
+
+      'stats.title': 'Stats',
+      'stats.repos': 'Public repos',
+      'stats.stars': 'Stars',
+      'stats.followers': 'Followers',
+      'stats.following': 'Following',
+
+      'about.title': 'About me',
+      'about.lead': 'A summary of my field of work and the tools I use.',
+      'about.body': 'My focus is Android development: building apps with Kotlin and Java, working daily in Android Studio, and version control with Git and its ecosystem. Alongside that I build backends and web tools in PHP, and I am comfortable with HTML and CSS. I test APIs with Postman and similar tools, design interfaces in Adobe XD, and work comfortably on Windows and Linux. I care about clean, testable code and I am always looking to learn new tools.',
+      'about.group': 'Group',
+      'about.tools': 'Tools',
+      'about.os': 'Operating system',
+      'about.osValue': 'Windows, Linux',
+      'about.langs': 'Languages',
+      'about.langsValue': 'Kotlin, Java, Android, PHP, HTML, CSS',
+      'about.editors': 'Code editors',
+      'about.editorsValue': 'Android Studio, PhpStorm, VS Code',
+      'about.git': 'Git',
+      'about.gitValue': 'Git, GitHub, GitHub Desktop, GitKraken, SmartGit, GitForce, Sourcetree, TortoiseGit, Fork, Tower',
+      'about.api': 'API testing',
+      'about.apiValue': 'Postman, Bruno, Yaak, HTTPie',
+      'about.design': 'Design',
+      'about.designValue': 'Adobe XD',
+
+      'projects.title': 'Selected projects',
+      'proj.col.project': 'Project',
+      'proj.col.desc': 'Description',
+      'proj.col.lang': 'Language',
+      'proj.col.stars': 'Stars',
+      'proj.col.link': 'Link',
+      'proj.github': 'GitHub',
+      'proj.rangban': 'Build, organize and export color palettes with a Persian interface',
+      'proj.timo': 'Task management made for developers: apps, folders and tasks, plus a Pomodoro timer and a bilingual interface',
+      'proj.codepoint': 'Manage code snippets with a right-to-left interface and light and dark themes',
+      'proj.applenote': 'A sample of best practices for MVP architecture in Android',
+      'proj.quickmail': 'A lightweight Android wrapper over JavaMail for sending SMTP mail with a smooth one-line API',
+      'proj.snake': 'Nokia 3310-style Snake game in pure HTML, CSS and JavaScript',
+      'proj.defineit': 'A dictionary app for word definitions',
+      'proj.kalayar': 'Simple store accounting software',
+      'proj.coffe': 'A live café price board with an admin panel and automatic refresh every 30 seconds',
+      'proj.telegram': 'A library for building Telegram-style dialogs in Android with flexible configuration',
+
+      'contact.title': "Let's stay in touch",
+      'contact.lead': 'For collaboration, questions about the projects, or just a simple hello.',
+      'contact.github': 'GitHub',
+      'contact.telegram': 'Telegram',
+      'contact.email': 'Email',
+      'contact.website': 'Website'
+    }
+  };
+
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll('[data-set-lang]');
+  var nodes = document.querySelectorAll('[data-i18n]');
+
+  function applyLang(lang) {
+    if (!I18N[lang]) { lang = 'fa'; }
+    var dict = I18N[lang];
+
+    root.setAttribute('lang', lang);
+    root.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+
+    if (dict['doc.title']) { document.title = dict['doc.title']; }
+
+    for (var i = 0; i < nodes.length; i++) {
+      var text = dict[nodes[i].getAttribute('data-i18n')];
+      if (typeof text === 'string') { nodes[i].textContent = text; }
+    }
+
+    for (var j = 0; j < buttons.length; j++) {
+      var isActive = buttons[j].getAttribute('data-set-lang') === lang;
+      buttons[j].setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    }
+
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+  }
+
+  for (var k = 0; k < buttons.length; k++) {
+    buttons[k].addEventListener('click', function () {
+      applyLang(this.getAttribute('data-set-lang'));
+    });
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  applyLang(saved === 'en' ? 'en' : 'fa');
+})();
+</script>
+
+</body>
+</html>

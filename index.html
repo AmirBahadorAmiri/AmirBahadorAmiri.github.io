@@ -120,7 +120,6 @@
     letter-spacing: .2px;
     white-space: nowrap;
   }
-  .nav .brand .mono { color: var(--blue); font-weight: 600; font-size: 13.5px; }
 
   .nav .links { display: flex; gap: 4px; }
 
@@ -144,6 +143,8 @@
   .hero {
     padding: 80px 0 52px;
     max-width: 780px;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .hero .kicker {
@@ -166,23 +167,8 @@
     background: var(--blue);
   }
 
-  .hero h1 {
-    font-size: clamp(30px, 4vw, 44px);
-    line-height: 1.32;
-    font-weight: 900;
-    margin: 0 0 20px;
-    letter-spacing: -0.3px;
-    text-wrap: balance;
-  }
-
-  .hero p.bio {
-    color: var(--muted);
-    font-size: 17px;
-    max-width: 58ch;
-    margin: 0 0 30px;
-  }
-
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero .cta-row { justify-content: center; }
 
   .btn {
     display: inline-flex;
@@ -525,11 +511,12 @@
 <header class="site">
   <div class="topline" aria-hidden="true"></div>
   <nav class="nav" aria-label="ناوبری اصلی">
-    <div class="brand">امیر بهادر امیری <span class="mono">/ dev</span></div>
+    <div class="brand">امیر بهادر امیری</div>
     <div class="links">
       <a href="#projects">پروژه‌ها</a>
       <a href="#about">درباره من</a>
       <a href="#contact">تماس</a>
+      <a href="index2.html">نسخهٔ تازه</a>
     </div>
   </nav>
 </header>
@@ -539,8 +526,6 @@
   <section class="hero">
     <div>
       <p class="kicker">توسعه‌دهنده اندروید</p>
-      <h1>اپلیکیشن می‌سازم؛ تمیز، پایدار و قابل نگهداری.</h1>
-      <p class="bio">توسعه‌دهنده اندرویدم؛ با Kotlin و Java اپ می‌سازم و بک‌اند و ابزارهای وب را با PHP می‌نویسم. از اپ‌های حسابداری فروشگاه‌ها تا کتابخانه‌های متن‌باز UI. کد را برای خواندن می‌نویسم، نه فقط برای اجرا شدن.</p>
       <div class="cta-row">
         <a class="btn primary" href="https://github.com/AmirBahadorAmiri" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.89-.01-1.75-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
