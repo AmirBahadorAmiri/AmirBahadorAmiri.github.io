@@ -267,10 +267,10 @@
 <th data-i18n="stats.following">دنبال‌شونده</th>
 </tr>
 <tr>
-<td align="center">50</td>
-<td align="center">124</td>
-<td align="center">125</td>
-<td align="center">87</td>
+<td align="center" id="stat-repos">50</td>
+<td align="center" id="stat-stars">124</td>
+<td align="center" id="stat-followers">125</td>
+<td align="center" id="stat-following">87</td>
 </tr>
 </table>
 </div>
@@ -581,6 +581,67 @@
   var saved = null;
   try { saved = localStorage.getItem('lang'); } catch (e) {}
   applyLang(saved === 'en' ? 'en' : 'fa');
+})();
+
+/* ---------- آمار زنده از گیت‌هاب ----------
+   اعداد داخل جدول فقط مقدار پیش‌فرض‌اند؛ اگر API در دسترس بود،
+   مخازن/دنبال‌کننده/دنبال‌شونده از پروفایل، ستاره‌ها مطابق چیپ
+   Stars پروفایل (مخازن ستاره‌خورده) و ستارهٔ هر پروژه از ردیف
+   خودش در جدول، زنده به‌روز می‌شود. */
+(function () {
+  if (!window.fetch) return;
+  var USER = 'AmirBahadorAmiri';
+
+  function set(id, v) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = v;
+  }
+
+  fetch('https://api.github.com/users/' + USER)
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (u) {
+      if (!u) return;
+      set('stat-repos', u.public_repos);
+      set('stat-followers', u.followers);
+      set('stat-following', u.following);
+    })
+    .catch(function () {});
+
+  /* ستاره‌ها: شمردن همهٔ مخازن ستاره‌خورده، با عبور از صفحات */
+  function fetchAllStarred(page, acc) {
+    return fetch('https://api.github.com/users/' + USER + '/starred?per_page=100&page=' + page)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (list) {
+        if (!list) return acc;
+        acc += list.length;
+        return list.length === 100 ? fetchAllStarred(page + 1, acc) : acc;
+      });
+  }
+  fetchAllStarred(1, 0)
+    .then(function (n) { if (n) set('stat-stars', n); })
+    .catch(function () {});
+
+  /* ستارهٔ هر پروژه: ردیف‌های جدول پروژه‌ها را با نام مخزن تطبیق بده */
+  fetch('https://api.github.com/users/' + USER + '/repos?per_page=100')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (repos) {
+      if (!repos || !repos.length) return;
+      var table = document.querySelector('#projects table');
+      if (!table) return;
+      var rows = table.querySelectorAll('tr');
+      for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].querySelectorAll('td');
+        if (cells.length < 4) continue;
+        var name = (cells[0].textContent || '').trim();
+        for (var j = 0; j < repos.length; j++) {
+          if (repos[j].name === name) {
+            cells[3].textContent = '❤️ ' + (repos[j].stargazers_count || 0);
+            break;
+          }
+        }
+      }
+    })
+    .catch(function () {});
 })();
 </script>
 
